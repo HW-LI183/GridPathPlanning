@@ -1,0 +1,28 @@
+# 大模型、依赖副本与运行缓存
+.cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+models/
+third_party/
+logs/
+.env
+.env.*
+*.pem
+*.key
+*.part
+*.pt
+*.pth
+*.bin
+*.safetensors
+# 只保留检查点目录的轻量证据；权重与优化器状态不进 Git。
+checkpoints/**/_states/
+checkpoints/**/latest
+checkpoints/**/best/*
+!checkpoints/**/best/checkpoint.json
+manifests/*.lock
+manifests/conda-*.txt
+*.selection.json
+# 论文及课程说明不放入发布包；来源见 README。
+Can Large Language Models be Good Path Planners.pdf
+AIAA4051_Project6.md

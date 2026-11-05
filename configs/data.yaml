@@ -1,0 +1,11 @@
+# 阶段三v1：训练仅G，开发G100/R100，测试ID/OOD各200。
+version: phase3.v1
+seed: 42
+train_generate: 4000
+dev_generate: 100
+dev_repair: {invalid_per_reason: 25}
+test_count_each: 200
+grid_size: [6, 6]
+obstacle_counts: [1, 2, 3, 4, 5]
+layout_split_weights: {train: 80, dev: 10, test: 10}
+sources: data/v1_sources.json

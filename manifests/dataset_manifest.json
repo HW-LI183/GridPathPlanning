@@ -1,0 +1,62 @@
+{
+  "version": "phase3.v1",
+  "files": {
+    "train": {
+      "path": "data/v1/train.jsonl",
+      "count": 4000,
+      "sha256": "3042027b0cd943461f281e97ca0b169375638d41d3684378b6561c1301cd7e55"
+    },
+    "dev": {
+      "path": "data/v1/dev.jsonl",
+      "count": 200,
+      "sha256": "3410eacc440b18b58f1c84629d6eb7de753a18f1360cb5794271c83cb5d661ae"
+    },
+    "test_id": {
+      "path": "data/v1/test_id.jsonl",
+      "count": 200,
+      "sha256": "307a1ff6d41606eba8e8e619beff67380adc683c76214a32100804f4bda42bbc"
+    },
+    "test_ood": {
+      "path": "data/v1/test_ood.jsonl",
+      "count": 200,
+      "sha256": "92d8d331d1cdb73a303b653e969d26c7aa375fe48ffab7b97b20d53b63cfb673"
+    },
+    "test_environments": {
+      "path": "data/v1/test_environments.jsonl",
+      "count": 200,
+      "sha256": "fa3256755854bf29f43093e802ee4a4c91d302bb501b66533719943bba424af7"
+    }
+  },
+  "sources": {
+    "configs/data.yaml": "5a8f94e9d8fe134d48dcfc200a0d7efc02c80590f59838d40ca46444410c142e",
+    "configs/project.json": "89cfe920919c5310ff4993885ac0483ee1bd394a9ebb87264366ae81e9923e21",
+    "data/v1_sources.json": "e471a97ea1cd78c88612b43e125fa2ffe8e93edfafa53df215bdde16b533136b",
+    "src/gridpath/data.py": "16960189f69dae7a1bcfa5f9f11a57778f002acb8a1f5241e36be42cea17a784",
+    "src/gridpath/data_audit.py": "da2afa7965bf26e517fc936e04c4ed03c15410924c0eb43ff02147897caa4f80",
+    "src/gridpath/prompts.py": "7032ea6fdca71dd434887afbd4d34cf2719b10e2b9219ed90c1c01643e906318",
+    "src/gridpath/data_schema.py": "ef6cf2bba6f1b4826b4e7a8cd6c7017bd6189d5bd7ae61dc0c8b7b9ba51f12bd",
+    "src/gridpath/corruptions.py": "d93a4f51ac5d6e42eedf8dc7b55e25d5f84aa4583e726da603aa28da6154fe38",
+    "src/gridpath/bfs.py": "8be5d1bd8fdc72a80afd402c1144e6114e6856cec0635504e134d501c5aa797d",
+    "src/gridpath/executor.py": "12748dec8744949163c021bcf0f64437cc5b9f68cf13dc3c199e3498d860c2dc",
+    "src/gridpath/types.py": "d0d9586d5c1e1f1054a150dd6d8fd231892b54eb89c5cf2cb27210295bd20383"
+  },
+  "train_tasks": {
+    "GENERATE": 4000,
+    "VERIFY": 0,
+    "REPAIR": 0
+  },
+  "dev_tasks": {
+    "GENERATE": 100,
+    "VERIFY": 0,
+    "REPAIR": 100
+  },
+  "train_obstacle_counts": {
+    "2": 800,
+    "3": 800,
+    "5": 800,
+    "1": 800,
+    "4": 800
+  },
+  "build_cpu_seconds": 0.2788458000868559,
+  "test_note": "ID/OOD共用200环境；test_environments是索引，不增加测试案例数"
+}

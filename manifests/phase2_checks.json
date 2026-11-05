@@ -1,0 +1,479 @@
+{
+  "phase": 2,
+  "status": "complete",
+  "checked_at": "2026-10-29T16:25:28.401045+00:00",
+  "protocol_version": "gridpath.execution.v1",
+  "python_executable": "/home/user/miniconda3/envs/gridpath/bin/python",
+  "seed": 42,
+  "upstream_commit": "5fd0376fc50ae9860bc986085165ebac5675fd44",
+  "upstream_source_sha256": "375462625e1c133d5b469037c03a18cbc33160a31b2ba88a0da89a127364a6e4",
+  "project_file_sha256": {
+    "configs/project.json": "89cfe920919c5310ff4993885ac0483ee1bd394a9ebb87264366ae81e9923e21",
+    "pyproject.toml": "09b090541f9067c1795b065c589b7433fdba53e59fc772b5da273014b5753758",
+    "scripts/check_phase2.py": "8ebccdd0942e4d60c64efe2db949123c005b5cc9beb738a86fc43d878a433e2e",
+    "src/gridpath/__init__.py": "b5c25e2dca77605fc541dab88161025a786ee3b6edb46ee4f1ef0e711dc0d221",
+    "src/gridpath/bfs.py": "8be5d1bd8fdc72a80afd402c1144e6114e6856cec0635504e134d501c5aa797d",
+    "src/gridpath/executor.py": "12748dec8744949163c021bcf0f64437cc5b9f68cf13dc3c199e3498d860c2dc",
+    "src/gridpath/metrics.py": "fcc3c05243e24719cc7f4f42fdd7a7bee6b96146642b4d7b93467d9fad6d100a",
+    "src/gridpath/official.py": "2bf2ed9c1e56e894050c85390486d66d64318d6d84a16bf6521c5856fc6387e3",
+    "src/gridpath/types.py": "d0d9586d5c1e1f1054a150dd6d8fd231892b54eb89c5cf2cb27210295bd20383"
+  },
+  "random_path_count": 512,
+  "official_differential": {
+    "total": 1030,
+    "official_code_1": 521,
+    "official_code_0": 389,
+    "official_code_2": 120,
+    "mismatch_count": 0
+  },
+  "bfs_successful_reference_checks": 512,
+  "intentional_raw_text_differences": [
+    {
+      "raw_plan": "right jump",
+      "official_code_on_raw_text": 1,
+      "strict_label": "invalid | step=2 | reason=invalid_action_token"
+    },
+    {
+      "raw_plan": "RIGHT",
+      "official_code_on_raw_text": 0,
+      "strict_label": "valid"
+    },
+    {
+      "raw_plan": "right\n",
+      "official_code_on_raw_text": 0,
+      "strict_label": "valid"
+    },
+    {
+      "raw_plan": "rightrightleft",
+      "official_code_on_raw_text": 1,
+      "strict_label": "invalid | step=1 | reason=invalid_action_token"
+    }
+  ],
+  "demonstration_scope": "仅人工样例的评分接口检查，不是模型实验结果或正式数据集",
+  "demo_grid": [
+    [
+      2,
+      3,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "demo_cases": [
+    {
+      "raw_plan": "right",
+      "success": true,
+      "feasible": true,
+      "first_error_step": null,
+      "error_reason": null,
+      "final_position": [
+        0,
+        1
+      ],
+      "executed_steps": 1,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "right",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            0,
+            1
+          ],
+          "position_after": [
+            0,
+            1
+          ],
+          "error_reason": null
+        }
+      ],
+      "actions": [
+        "right"
+      ],
+      "verification_label": "valid"
+    },
+    {
+      "raw_plan": "right left right",
+      "success": true,
+      "feasible": true,
+      "first_error_step": null,
+      "error_reason": null,
+      "final_position": [
+        0,
+        1
+      ],
+      "executed_steps": 3,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "right",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            0,
+            1
+          ],
+          "position_after": [
+            0,
+            1
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 2,
+          "action": "left",
+          "position_before": [
+            0,
+            1
+          ],
+          "attempted_position": [
+            0,
+            0
+          ],
+          "position_after": [
+            0,
+            0
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 3,
+          "action": "right",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            0,
+            1
+          ],
+          "position_after": [
+            0,
+            1
+          ],
+          "error_reason": null
+        }
+      ],
+      "actions": [
+        "right",
+        "left",
+        "right"
+      ],
+      "verification_label": "valid"
+    },
+    {
+      "raw_plan": "down right",
+      "success": false,
+      "feasible": false,
+      "first_error_step": 2,
+      "error_reason": "obstacle_collision",
+      "final_position": [
+        1,
+        0
+      ],
+      "executed_steps": 1,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "down",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            1,
+            0
+          ],
+          "position_after": [
+            1,
+            0
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 2,
+          "action": "right",
+          "position_before": [
+            1,
+            0
+          ],
+          "attempted_position": [
+            1,
+            1
+          ],
+          "position_after": [
+            1,
+            0
+          ],
+          "error_reason": "obstacle_collision"
+        }
+      ],
+      "actions": [
+        "down",
+        "right"
+      ],
+      "verification_label": "invalid | step=2 | reason=obstacle_collision"
+    },
+    {
+      "raw_plan": "left",
+      "success": false,
+      "feasible": false,
+      "first_error_step": 1,
+      "error_reason": "out_of_bounds",
+      "final_position": [
+        0,
+        0
+      ],
+      "executed_steps": 0,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "left",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            0,
+            -1
+          ],
+          "position_after": [
+            0,
+            0
+          ],
+          "error_reason": "out_of_bounds"
+        }
+      ],
+      "actions": [
+        "left"
+      ],
+      "verification_label": "invalid | step=1 | reason=out_of_bounds"
+    },
+    {
+      "raw_plan": "jump",
+      "success": false,
+      "feasible": false,
+      "first_error_step": 1,
+      "error_reason": "invalid_action_token",
+      "final_position": [
+        0,
+        0
+      ],
+      "executed_steps": 0,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "jump",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": null,
+          "position_after": [
+            0,
+            0
+          ],
+          "error_reason": "invalid_action_token"
+        }
+      ],
+      "actions": [
+        "jump"
+      ],
+      "verification_label": "invalid | step=1 | reason=invalid_action_token"
+    },
+    {
+      "raw_plan": "down",
+      "success": false,
+      "feasible": true,
+      "first_error_step": 2,
+      "error_reason": "goal_not_reached",
+      "final_position": [
+        1,
+        0
+      ],
+      "executed_steps": 1,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "down",
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": [
+            1,
+            0
+          ],
+          "position_after": [
+            1,
+            0
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 2,
+          "action": null,
+          "position_before": [
+            1,
+            0
+          ],
+          "attempted_position": null,
+          "position_after": [
+            1,
+            0
+          ],
+          "error_reason": "goal_not_reached"
+        }
+      ],
+      "actions": [
+        "down"
+      ],
+      "verification_label": "invalid | step=2 | reason=goal_not_reached"
+    },
+    {
+      "raw_plan": "",
+      "success": false,
+      "feasible": true,
+      "first_error_step": 1,
+      "error_reason": "goal_not_reached",
+      "final_position": [
+        0,
+        0
+      ],
+      "executed_steps": 0,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": null,
+          "position_before": [
+            0,
+            0
+          ],
+          "attempted_position": null,
+          "position_after": [
+            0,
+            0
+          ],
+          "error_reason": "goal_not_reached"
+        }
+      ],
+      "actions": [],
+      "verification_label": "invalid | step=1 | reason=goal_not_reached"
+    }
+  ],
+  "demo_path_metrics": {
+    "count": 7,
+    "success_count": 2,
+    "feasible_count": 4,
+    "reference_reachable_count": 7,
+    "reference_unreachable_count": 0,
+    "success_with_reference_count": 2,
+    "optimal_success_count": 1,
+    "success_rate": 0.2857142857142857,
+    "feasibility": 0.5714285714285714,
+    "optimal_success_rate": 0.14285714285714285,
+    "conditional_optimal_rate": 0.5,
+    "mean_success_optimality_ratio": 0.6666666666666666
+  },
+  "demo_verification_metrics": {
+    "count": 7,
+    "valid_count": 2,
+    "invalid_count": 5,
+    "correct_classification_count": 4,
+    "classification_accuracy": 0.5714285714285714,
+    "format_error_count": 1,
+    "format_error_rate": 0.14285714285714285,
+    "macro_f1": 0.6190476190476191,
+    "first_error_localization_count": 2,
+    "first_error_localization_accuracy": 0.4,
+    "error_type_count": 2,
+    "error_type_accuracy": 0.4,
+    "joint_diagnosis_count": 2,
+    "joint_diagnosis_accuracy": 0.4,
+    "classes": {
+      "valid": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 0,
+        "support": 2,
+        "f1": 0.6666666666666666
+      },
+      "invalid": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 3,
+        "support": 5,
+        "f1": 0.5714285714285714
+      }
+    },
+    "by_reason": {
+      "obstacle_collision": {
+        "count": 1,
+        "first_error_localization_count": 0,
+        "error_type_count": 0,
+        "joint_diagnosis_count": 0,
+        "first_error_localization_accuracy": 0.0,
+        "error_type_accuracy": 0.0,
+        "joint_diagnosis_accuracy": 0.0
+      },
+      "out_of_bounds": {
+        "count": 1,
+        "first_error_localization_count": 1,
+        "error_type_count": 1,
+        "joint_diagnosis_count": 1,
+        "first_error_localization_accuracy": 1.0,
+        "error_type_accuracy": 1.0,
+        "joint_diagnosis_accuracy": 1.0
+      },
+      "invalid_action_token": {
+        "count": 1,
+        "first_error_localization_count": 1,
+        "error_type_count": 1,
+        "joint_diagnosis_count": 1,
+        "first_error_localization_accuracy": 1.0,
+        "error_type_accuracy": 1.0,
+        "joint_diagnosis_accuracy": 1.0
+      },
+      "goal_not_reached": {
+        "count": 2,
+        "first_error_localization_count": 0,
+        "error_type_count": 0,
+        "joint_diagnosis_count": 0,
+        "first_error_localization_accuracy": 0.0,
+        "error_type_accuracy": 0.0,
+        "joint_diagnosis_accuracy": 0.0
+      }
+    }
+  },
+  "demo_repair_metrics": {
+    "count": 7,
+    "original_invalid_count": 5,
+    "original_valid_count": 2,
+    "repair_success_count": 2,
+    "repair_success_rate": 0.4,
+    "valid_destruction_count": 0,
+    "valid_destruction_rate": 0.0,
+    "final_success_count": 4,
+    "final_success_rate": 0.5714285714285714
+  },
+  "resources": {
+    "gpu_hours": 0,
+    "training_runs": 0,
+    "downloads": 0,
+    "formal_dataset_samples_created": 0,
+    "cpu_wall_seconds": 0.03606
+  }
+}

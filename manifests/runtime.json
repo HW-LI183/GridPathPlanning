@@ -1,0 +1,84 @@
+{
+  "checked_at": "2026-10-29T16:07:17.008378+00:00",
+  "python_executable": "/home/user/miniconda3/envs/gridpath/bin/python",
+  "python_version": "3.10.22",
+  "conda_prefix": "/home/user/miniconda3/envs/gridpath",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "packages": {
+    "torch": "2.5.1+cu121",
+    "transformers": "4.40.1",
+    "tokenizers": "0.19.1",
+    "huggingface-hub": "0.23.2",
+    "accelerate": "0.30.1",
+    "sentencepiece": "0.1.99",
+    "protobuf": "3.20.3",
+    "datasets": "2.19.2",
+    "numpy": "1.26.4",
+    "scikit-learn": "1.5.2",
+    "matplotlib": "3.9.2",
+    "PyYAML": "6.0.2",
+    "pytest": "8.3.3"
+  },
+  "cuda_available": true,
+  "torch_cuda": "12.1",
+  "upstream_commit": "5fd0376fc50ae9860bc986085165ebac5675fd44",
+  "models": [
+    {
+      "repo_id": "google-t5/t5-small",
+      "directory": "models/t5-small",
+      "revision": "df1b051c49625cf57a3d0d8d3863ed4d13564fe4",
+      "verified_files": [
+        "config.json",
+        "generation_config.json",
+        "tokenizer_config.json",
+        "tokenizer.json",
+        "spiece.model",
+        "model.safetensors"
+      ],
+      "model_type": "t5",
+      "d_model": 512,
+      "tokenizer_class": "T5TokenizerFast",
+      "tokenizer_model_max_length": 512,
+      "example_tokens": 27,
+      "weights_loaded": true,
+      "parameter_count": 60506624,
+      "cpu_load_seconds": 0.213
+    },
+    {
+      "repo_id": "google-t5/t5-base",
+      "directory": "models/t5-base",
+      "revision": "a9723ea7f1b39c1eae772870f3b547bf6ef7e6c1",
+      "verified_files": [
+        "config.json",
+        "generation_config.json",
+        "tokenizer.json",
+        "spiece.model",
+        "model.safetensors"
+      ],
+      "model_type": "t5",
+      "d_model": 768,
+      "tokenizer_class": "T5TokenizerFast",
+      "tokenizer_model_max_length": 1000000000000000019884624838656,
+      "example_tokens": 27,
+      "weights_loaded": true,
+      "parameter_count": 222903552,
+      "cpu_load_seconds": 0.33
+    }
+  ],
+  "nvidia_smi": [
+    "0, NVIDIA RTX A6000, 49140, 48499, 580.178.04"
+  ],
+  "gpu_name": "NVIDIA RTX A6000",
+  "gpu_memory_bytes": 50897289216,
+  "gpu_compute_capability": [
+    8,
+    6
+  ],
+  "bf16_supported": true,
+  "gpu_probe_seconds": 0.160406,
+  "gpu_probe_description": "仅16x16 FP32/BF16算子检查，无训练或模型批量评估",
+  "training_api_constructed_without_training": true,
+  "phase1_acceptance": "complete",
+  "check_wall_seconds": 3.364011,
+  "resource_note": "按完整检查命令的wall time保守登记GPU占用；gpu_probe_seconds仅为算子段。"
+}

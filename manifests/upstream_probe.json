@@ -1,0 +1,55 @@
+{
+  "upstream_commit": "5fd0376fc50ae9860bc986085165ebac5675fd44",
+  "source": "third_party/ppnl_upstream/ppnl-spatial-temporal-reasoning/evaluate/executor-point-sg.py",
+  "source_sha256": "375462625e1c133d5b469037c03a18cbc33160a31b2ba88a0da89a127364a6e4",
+  "cases": [
+    {
+      "actions": "right",
+      "official_code": 1,
+      "expected_code": 1
+    },
+    {
+      "actions": "right unknown",
+      "official_code": 1,
+      "expected_code": 1
+    },
+    {
+      "actions": "right left",
+      "official_code": 0,
+      "expected_code": 0
+    },
+    {
+      "actions": "right left right",
+      "official_code": 1,
+      "expected_code": 1
+    },
+    {
+      "actions": "down right",
+      "official_code": 2,
+      "expected_code": 2
+    },
+    {
+      "actions": "left",
+      "official_code": 0,
+      "expected_code": 0
+    },
+    {
+      "actions": "",
+      "official_code": 0,
+      "expected_code": 0
+    },
+    {
+      "actions": "right\n",
+      "official_code": 0,
+      "expected_code": 0
+    },
+    {
+      "actions": "right  ",
+      "official_code": 1,
+      "expected_code": 1
+    }
+  ],
+  "empty_at_goal_code": 1,
+  "official_distance_at_goal": 1,
+  "note": "距离函数在目标返回1，计的是节点数；这些是官方行为探查，不是阶段2适配器实现。"
+}
