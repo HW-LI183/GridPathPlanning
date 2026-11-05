@@ -1,0 +1,161 @@
+{
+  "schema_version": "gridpath.checkpoint.v1",
+  "created_at": "2026-11-05T11:21:30.924881+00:00",
+  "state": {
+    "global_step": 3000,
+    "consumed_examples": 12000,
+    "evaluated_steps": [
+      1000,
+      2000,
+      3000
+    ],
+    "best_score": [
+      0.56,
+      0.56,
+      -0.41419038886383935
+    ],
+    "best_step": 3000
+  },
+  "binding": {
+    "fingerprint": "6a3be4012f02e54b14bb6efbe4aed709010a822b3d94ec2365b6358f48717664",
+    "config": {
+      "version": "phase4.v1",
+      "seed": 42,
+      "max_total_epochs": 3,
+      "effective_batch_size": 4,
+      "micro_batch_size": 4,
+      "eval_batch_size": 8,
+      "learning_rate": 0.0001,
+      "warmup_updates": 12,
+      "weight_decay": 0.01,
+      "max_grad_norm": 1.0,
+      "precision": "bf16",
+      "max_source_tokens": 512,
+      "max_target_tokens": 256,
+      "generation_tokens": 256,
+      "max_plan_actions": 72,
+      "checkpoint_every_updates": 25,
+      "pilot_updates": 10,
+      "session_wall_seconds": 3600,
+      "gpu_hours_cap": 20,
+      "model_id": "google/flan-t5-base",
+      "revision": "7bcac572ce56db69c1ea7c8af255c5d7c9672fc2",
+      "model_directory": "models/flan-t5-base",
+      "model_key": "flan_t5_base",
+      "run_directory": "checkpoints/v1/flan_t5_base",
+      "max_updates": 3000,
+      "evaluate_steps": [
+        1000,
+        2000,
+        3000
+      ]
+    },
+    "dataset": "e32930e734775b6aa31194f5bdd57e9617330b662d9e513a8f3b52d8f548789e",
+    "audit": "0051cd5238055355a60056cfb45b8f7d2d787c7ed4ce69d101fe560612606ad0",
+    "model": {
+      "repo_id": "google/flan-t5-base",
+      "revision": "7bcac572ce56db69c1ea7c8af255c5d7c9672fc2",
+      "local_directory": "models/flan-t5-base",
+      "files": [
+        {
+          "name": "config.json",
+          "size": 1404,
+          "expected_sha256": null,
+          "git_blob_id": "d41e16cd4cd58621695da4f94132f516d07251af",
+          "sha256": "7c1853dbfa0e4aac093eb109a358b6ab25fe86b7c15185a91322f0ed26f0f940",
+          "downloaded": true,
+          "resolved_host": "hf-mirror.com",
+          "download_seconds": 3.272
+        },
+        {
+          "name": "generation_config.json",
+          "size": 147,
+          "expected_sha256": null,
+          "git_blob_id": "d52815623b46b7db1c4b957b5a83a8ad30b0146a",
+          "sha256": "f5a1c7e2be8092018d8835128987edf0111637dd98e90599cc80310fef75d95a",
+          "downloaded": true,
+          "resolved_host": "hf-mirror.com",
+          "download_seconds": 3.232
+        },
+        {
+          "name": "tokenizer_config.json",
+          "size": 2537,
+          "expected_sha256": null,
+          "git_blob_id": "e3685b0cb5c8909cf3e7d72ffc16ca94c861bdfb",
+          "sha256": "4c55124402e4ce48c7125d04b9af152a125eda9e7c80829f8f99f2ec69f3f68d",
+          "downloaded": true,
+          "resolved_host": "hf-mirror.com",
+          "download_seconds": 3.112
+        },
+        {
+          "name": "special_tokens_map.json",
+          "size": 2201,
+          "expected_sha256": null,
+          "git_blob_id": "2c19eb6e3b583f52d34b903b5978d3d30b6b7682",
+          "sha256": "5c87151ef0f72a99d1f766a4c418bd2a1f90aaa30a8e22fe5eca9641daebb64f",
+          "downloaded": true,
+          "resolved_host": "hf-mirror.com",
+          "download_seconds": 3.695
+        },
+        {
+          "name": "tokenizer.json",
+          "size": 2424064,
+          "expected_sha256": null,
+          "git_blob_id": "fc669fbad1a6a82119ca3e1fa75db33ee22ca47d",
+          "sha256": "fe2ebbbbde2985be723e0ce18217853e4020c5e9d35bd07be2c27ab9d3ead57a",
+          "downloaded": true,
+          "resolved_host": "hf-mirror.com",
+          "download_seconds": 5.437
+        },
+        {
+          "name": "spiece.model",
+          "size": 791656,
+          "expected_sha256": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86",
+          "git_blob_id": "317a5ccbde45300f5d1d970d4d449af2108b147e",
+          "sha256": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86",
+          "downloaded": true,
+          "resolved_host": "cas-bridge.xethub.hf.co",
+          "download_seconds": 1.684
+        },
+        {
+          "name": "model.safetensors",
+          "size": 990345061,
+          "expected_sha256": "1dfb70afdcedceb9f9fae2f9b68e004ad934361fb35b9b2bd50b45ea90790fc8",
+          "git_blob_id": "56384aed8801379e98a4b0670968deb78d7b9257",
+          "sha256": "1dfb70afdcedceb9f9fae2f9b68e004ad934361fb35b9b2bd50b45ea90790fc8",
+          "downloaded": false
+        }
+      ]
+    },
+    "sources": {
+      "configs/baselines_extra.yaml": "e022794e6c083e1515264403c99e1353cff808eedbae1869de5bb1b0fc2d9f6c",
+      "configs/phase4_v1.yaml": "5949fbabfbe311680f4f07d58df9023caf372811fabb18bbb001da018fd1f664",
+      "src/gridpath/training.py": "9d8eec40a50b550fc132455ab422328ce11f1998e694d542b36fc3f38e56c64f",
+      "src/gridpath/training_helpers.py": "4ab5db67794f053cbbabf58cce276f3b0e812bf423a9ac38390c2a5128c7f6b8",
+      "src/gridpath/evaluation.py": "ded3fc6079c8d11308d5c92d6330398c4334452f8550ae877d20aa14783fa0e5",
+      "src/gridpath/inference.py": "93ab4bd18e1e2707c8b2440a39b3f13a11ac39a95de7ae3ab83611af2c265e6f",
+      "src/gridpath/prompts.py": "7032ea6fdca71dd434887afbd4d34cf2719b10e2b9219ed90c1c01643e906318",
+      "src/gridpath/metrics.py": "fcc3c05243e24719cc7f4f42fdd7a7bee6b96146642b4d7b93467d9fad6d100a",
+      "src/gridpath/executor.py": "12748dec8744949163c021bcf0f64437cc5b9f68cf13dc3c199e3498d860c2dc",
+      "src/gridpath/resources.py": "466fe3763ac3c65399b140ab78c75d76db145d8603d4f8ebedf0c279a4bd0033",
+      "src/gridpath/training_config.py": "53fad55d335dd90e5e8b4a9e7fc870fcdafed501258964fd3ddf9eb1efd638b0",
+      "scripts/phase4.py": "a517c03f0d98774e6b0e0919be5b91ea721c5a50cdbc9bc911e0adf0e0fffb35",
+      "scripts/run_phase4_v1.sh": "9f8f9d5fe3085aa0fd9be542a2b6420ea9b48b3f9c9d319b317d5dce7ac0d910"
+    },
+    "packages": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.40.1",
+      "numpy": "1.26.4"
+    }
+  },
+  "files": {
+    "generation_config.json": "b91abf45336468d23aa182cdfb8a20b078d9112b103913c4f73b29ecfc2fbe00",
+    "special_tokens_map.json": "7a1985a994c41886db38c719d2a3d2f40606663cc19d7c5d6a85d349320e06d2",
+    "config.json": "340b0cb3089aaf20dc6fedc47ea7bc617b0ff42a5b6dfc833828e43520a2c423",
+    "tokenizer_config.json": "6fa625547e73f7a565e5fa7f6cc0b89e61c521c15816c8415238f639fa5b9e21",
+    "model.safetensors": "2118fae5126706c15a1123e9c9c749df3d2438a75d95df54a466f5ee26db998d",
+    "tokenizer.json": "4d4b21a8cc7c0407dafd8ac6215269cd05c8e49a521c3580479b567879526160",
+    "training_state.pt": "a87376a5340b7b035a807b563890d02d484127c1f6ec7039110e293b6062168a",
+    "spiece.model": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86"
+  }
+}

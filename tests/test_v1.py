@@ -144,7 +144,8 @@ assert os.environ["CUBLAS_WORKSPACE_CONFIG"]==":4096:8"
     subprocess.run([sys.executable,"-c",code],env=env,cwd=ROOT,check=True,capture_output=True,timeout=30)
 
 
-def test_real_cpu_training_pilot_resume_matches_uninterrupted_three_passes(tmp_path,monkeypatch):
+@pytest.mark.parametrize("projection",["relu","gated-gelu"])
+def test_real_cpu_training_pilot_resume_matches_uninterrupted_three_passes(tmp_path,monkeypatch,projection):
     import torch
     import safetensors.torch
     from transformers import T5Config,T5ForConditionalGeneration,AutoTokenizer,AutoModelForSeq2SeqLM
@@ -161,7 +162,7 @@ def test_real_cpu_training_pilot_resume_matches_uninterrupted_three_passes(tmp_p
         def save_pretrained(self,path):(path/"tokenizer_config.json").write_text('{}')
     def factory(*args,**kwargs):
         return T5ForConditionalGeneration(T5Config(vocab_size=16,d_model=8,d_ff=16,d_kv=4,
-            num_layers=1,num_decoder_layers=1,num_heads=2,decoder_start_token_id=0,pad_token_id=0,eos_token_id=1))
+            num_layers=1,num_decoder_layers=1,num_heads=2,decoder_start_token_id=0,pad_token_id=0,eos_token_id=1,feed_forward_proj=projection))
     module_to=torch.nn.Module.to;tensor_to=torch.Tensor.to
     def to_cpu(original):
         def adapted(self,*args,**kwargs):
@@ -219,3 +220,56 @@ def test_tiny_random_cpu_inference_cache_and_source_guard(tmp_path):
         guarded=Predictor(model,tok,{**cfg,"max_source_tokens":1})
         assert guarded(text).failure=="source_limit" and guarded.calls==0
     finally:torch.set_num_threads(before)
+
+
+@pytest.mark.parametrize('key',['t5_base','t5_small','flan_t5_base','flan_t5_small'])
+def test_four_baselines_share_recipe_but_isolate_checkpoints(key):
+    cfg=config_for(key)
+    assert cfg['run_directory']==f'checkpoints/v1/{key}'
+    reference=config_for('t5_base')
+    assert {k:v for k,v in cfg.items() if k not in ('model_key','model_id','revision','model_directory','run_directory')}=={
+        k:v for k,v in reference.items() if k not in ('model_key','model_id','revision','model_directory','run_directory')}
+
+
+def test_four_model_selection_preserves_historical_lock():
+    from gridpath.training_config import primary_lock_path,model_keys
+    assert len(model_keys())==4
+    assert primary_lock_path().name=='primary_model_v1_four.json'
+    assert primary_lock_path(('t5_base','t5_small')).name=='primary_model_v1.json'
+    with pytest.raises(ValueError):primary_lock_path(('flan_t5_base','flan_t5_small'))
+
+
+def test_flan_model_revisions_match_separate_manifest():
+    manifest=read_json(ROOT/'manifests/flan_models.json')
+    for key in ('flan_t5_base','flan_t5_small'):
+        cfg=config_for(key)
+        card=next(c for c in manifest['models'] if c['repo_id']==cfg['model_id'])
+        assert card['revision']==cfg['revision']
+        assert card['local_directory']==cfg['model_directory']
+        assert next(f for f in card['files'] if f['name']=='model.safetensors')['sha256']
+
+
+@pytest.mark.parametrize('flan_score,expected',[(.7,'flan_t5_base'),(.6,'t5_base')])
+def test_four_model_primary_selection_keeps_old_lock(tmp_path,monkeypatch,flan_score,expected):
+    from gridpath import training,training_config
+    keys=training_config.model_keys()
+    configs={key:config_for(key) for key in keys}
+    dataset=tmp_path/'manifests/dataset_manifest.json'
+    dataset.parent.mkdir();dataset.write_text('{}')
+    old=tmp_path/'configs/primary_model_v1.json'
+    old.parent.mkdir();old.write_text('{"historical":"untouched"}')
+    for key,score in zip(keys,(.6,.23,flan_score,.4)):
+        run=tmp_path/configs[key]['run_directory']
+        (run/'evaluations').mkdir(parents=True)
+        training_config.write_json(run/'completed.json',{'fingerprint':key,'state':{'consumed_examples':12000,'best_step':1000}})
+        training_config.write_json(run/'evaluations/step_1000.json',{
+            'fingerprint':key,'dev_generate':{'count':100,'metrics':{'success_rate':score,'optimal_success_rate':score}}})
+    monkeypatch.setattr(training,'ROOT',tmp_path)
+    monkeypatch.setattr(training_config,'ROOT',tmp_path)
+    monkeypatch.setattr(training,'binding_for',lambda key,**kw:(configs[key],[],[],{'fingerprint':key}))
+    monkeypatch.setattr(training,'validate_checkpoint',lambda path,fingerprint:{'state':{'best_step':1000},'files':{'model.safetensors':fingerprint}})
+    result=training.select_primary()
+    assert result['selected']['model']==expected
+    assert len(result['candidates'])==4
+    assert (tmp_path/'configs/primary_model_v1_four.json').exists()
+    assert old.read_text()=='{"historical":"untouched"}'

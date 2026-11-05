@@ -222,8 +222,8 @@ print(reference.distance, reference.actions)
 
 证据文件：
 
-- [pytest.log](../logs/phase2/pytest.log)、[pytest.xml](../logs/phase2/pytest.xml)：完整单元检查结果。
-- [check.log](../logs/phase2/check.log)：差分检查摘要。
+- `logs/phase2/pytest.log`（工作站记录，不随发布包上传）、`logs/phase2/pytest.xml`（工作站记录，不随发布包上传）：完整单元检查结果。
+- `logs/phase2/check.log`（工作站记录，不随发布包上传）：差分检查摘要。
 - [phase2_checks.json](../manifests/phase2_checks.json)：源码哈希、随机种子、官方版本、预期差异、轨迹和评分接口样例。
 - [phase1_recheck.json](../manifests/phase1_recheck.json)：阶段 1 权重和文件复核证据。
 

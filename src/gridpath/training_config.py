@@ -40,12 +40,27 @@ def read_rows(path):
     return [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
 
 
+def model_keys():
+    return ("t5_base", "t5_small", "flan_t5_base", "flan_t5_small")
+
+
+def primary_lock_path(models=None):
+    keys = tuple(models or model_keys())
+    if keys == ("t5_base", "t5_small"):
+        return ROOT / "configs/primary_model_v1.json"
+    if keys != model_keys():
+        raise ValueError("主模型选择必须完整比较原T5双模型或全部四模型")
+    return ROOT / "configs/primary_model_v1_four.json"
+
+
 def config_for(model):
     p = yaml.safe_load((ROOT / "configs/phase4_v1.yaml").read_text())
+    extra = yaml.safe_load((ROOT / "configs/baselines_extra.yaml").read_text())["models"]
+    p["models"] = {**p["models"], **extra}
     if (p["version"] != "phase4.v1" or model not in p["models"]
             or p["max_total_epochs"] != 3 or p["effective_batch_size"] != 4
             or p["micro_batch_size"] != 4 or p["seed"] != 42):
-        raise ValueError("v1仅允许两个T5、三遍、有效batch4、seed42")
+        raise ValueError("v1仅允许已注册的四个T5系列模型、三遍、有效batch4、seed42")
     return {**{k:v for k,v in p.items() if k != "models"}, **p["models"][model],
             "model_key": model, "run_directory": f"checkpoints/v1/{model}",
             "max_updates": 3000, "evaluate_steps": [1000, 2000, 3000]}
@@ -73,15 +88,21 @@ def binding_for(model, verify_weights=True):
     import importlib.metadata
     cfg = config_for(model)
     train, dev = frozen_data()
-    card = next(m for m in read_json(ROOT / "manifests/models.json")["models"] if m["repo_id"] == cfg["model_id"])
+    manifest_name = "flan_models.json" if model.startswith("flan_") else "models.json"
+    card = next(m for m in read_json(ROOT / "manifests" / manifest_name)["models"] if m["repo_id"] == cfg["model_id"])
     if card["revision"] != cfg["revision"] or card["local_directory"] != cfg["model_directory"]:
         raise ValueError("原始模型来源不匹配")
     for item in card["files"]:
         if not verify_weights and item["name"] == "model.safetensors":
             continue
-        if sha256(ROOT / cfg["model_directory"] / item["name"]) != item["sha256"]:
+        path = ROOT / cfg["model_directory"] / item["name"]
+        if not path.is_file():
+            raise FileNotFoundError(
+                f"模型资源缺失：{path}。请先执行 bash scripts/run_phase4_v1.sh prepare {model}，"
+                "下载并校验完成后再运行训练。")
+        if sha256(path) != item["sha256"]:
             raise ValueError("原始模型文件校验失败")
-    sources = ["configs/phase4_v1.yaml", "src/gridpath/training.py", "src/gridpath/training_helpers.py",
+    sources = ["configs/baselines_extra.yaml", "configs/phase4_v1.yaml", "src/gridpath/training.py", "src/gridpath/training_helpers.py",
                "src/gridpath/evaluation.py", "src/gridpath/inference.py", "src/gridpath/prompts.py",
                "src/gridpath/metrics.py", "src/gridpath/executor.py", "src/gridpath/resources.py",
                "src/gridpath/training_config.py", "scripts/phase4.py", "scripts/run_phase4_v1.sh"]
@@ -90,7 +111,7 @@ def binding_for(model, verify_weights=True):
                "sources":{p:sha256(ROOT / p) for p in sources},
                "packages":{p:importlib.metadata.version(p) for p in ("torch", "transformers", "numpy")}}
     lineage_path=ROOT/"manifests/v1_training_lineage.json"
-    if lineage_path.exists():
+    if lineage_path.exists() and model in read_json(lineage_path)["models"]:
         lineage=read_json(lineage_path)
         if lineage["data_manifest_sha256"]!=payload["dataset"]:
             raise ValueError("修复开发数据不属于当前登记版本")

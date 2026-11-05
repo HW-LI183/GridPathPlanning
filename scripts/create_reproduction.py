@@ -14,10 +14,10 @@ def create(destination, reuse_assets=False, root=ROOT):
     destination.mkdir(parents=True)
     for folder in ('src', 'scripts', 'tests', 'docs', 'configs'):
         shutil.copytree(root / folder, destination / folder,
-                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc', 'primary_model_v1.json'))
+                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc', 'primary_model_v1.json', 'primary_model_v1_four.json'))
     for name in ('README.md', 'plan.md', '.gitignore', 'pyproject.toml',
                  'requirements.txt', 'requirements-lock.txt', 'data/v1_sources.json',
-                 'manifests/models.json', 'manifests/upstream_probe.json'):
+                 'manifests/models.json', 'manifests/flan_models.json', 'manifests/upstream_probe.json'):
         target = destination / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(root / name, target)

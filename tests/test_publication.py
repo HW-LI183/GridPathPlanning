@@ -15,7 +15,7 @@ def load(name):
 
 
 def test_publication_selection_excludes_heavy_assets(tmp_path):
-    for name in ('data/v1_sources.json', 'results/v1/summary_dev.json',
+    for name in ('data/v1_sources.json', 'results/v1/summary_dev.json', 'results/v1/t5_base/dev/cache/duplicate.json',
                  'checkpoints/v1/t5_base/best/checkpoint.json',
                  'models/model.safetensors', 'checkpoints/v1/t5_base/_states/x/model.safetensors',
                  'logs/debug.log', 'src/gridpath/__pycache__/x.pyc'):
@@ -26,6 +26,7 @@ def test_publication_selection_excludes_heavy_assets(tmp_path):
     relative = [p.relative_to(tmp_path).as_posix() for p in selected]
     assert 'data/v1_sources.json' in relative
     assert 'results/v1/summary_dev.json' in relative
+    assert not any('/cache/' in p for p in relative)
     assert 'checkpoints/v1/t5_base/best/checkpoint.json' in relative
     assert not any(p.endswith(('.pt', '.safetensors', '.pyc', '.pdf')) and not p.startswith('results/v1/figures/') for p in relative)
     assert not any(p.startswith(('models/', 'third_party/', 'logs/')) for p in relative)

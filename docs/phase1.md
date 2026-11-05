@@ -1,12 +1,12 @@
 # 阶段 1：复核 PPNL、准备 Conda 环境与固定模型版本
 
-> 更新日期：2026-11-05（北京时间，统一当前模型范围）。状态：**原两个 T5 权重已下载并离线加载成功，阶段 1 已验收；当前v1只使用T5-small/base。**
+> 更新日期：2026-11-05（北京时间）。状态：四模型固定版本资源均已准备；T5-small/base与Flan-T5-small/base训练和开发评价全部完成。环境及上游版本保持固定。
 > 对应计划：[plan.md](../plan.md) 第 4 节。
 > 后续阶段统一写入 `docs/phaseX.md`，并使用本文件的八节结构；空白模板见 [phase_template.md](./phase_template.md)。
 
 ## 1. 阶段目标与范围
 
-本阶段完成单目标 PPNL 的源码审阅、工作站与 Python 环境准备、两个原始 T5 检查点的版本固定，以及可复现的下载、校验和环境检查入口。
+本阶段完成单目标 PPNL 的源码审阅、工作站与 Python 环境准备、四个基线检查点的版本固定，以及可复现的下载、校验和环境检查入口。
 
 本阶段实际完成了环境安装、镜像下载、源码审阅、短检查和两个真实模型的离线加载验收。阶段 1 未生成正式数据集，严格执行器由阶段 2 实施；没有进行训练、GPU pilot 或批量推理评估。
 
@@ -30,7 +30,7 @@
 | 随机种子 | 后续实验固定为 42；本阶段未训练 |
 | 项目 GPU 预算 | 继续按 20 GPU-hours 规划，不因更换显卡自行扩大预算 |
 
-2026-10-29 用户已明确：**基线先使用不带 Flan 的原始 T5-small、T5-base**。本项目据此执行；后续没有新指示时，不再把 Flan-T5 的确认作为待办。课程原说明保留原样，实际执行决策写入项目计划和配置。
+2026-10-29 用户已明确：**基线先使用不带 Flan 的原始 T5-small、T5-base**。本项目据此执行；当前模型范围和统一运行接口见第7节。课程原说明保留原样，实际执行决策写入项目计划和配置。
 
 ### 2.2 固定版本与镜像
 
@@ -41,6 +41,8 @@
 | small revision | `df1b051c49625cf57a3d0d8d3863ed4d13564fe4` |
 | T5-base | `google-t5/t5-base` |
 | base revision | `a9723ea7f1b39c1eae772870f3b547bf6ef7e6c1` |
+| Flan-T5-small | `google/flan-t5-small`，revision `0fc9ddf78a1e988dac52e2dac162b0ede4fd74ab` |
+| Flan-T5-base | `google/flan-t5-base`，revision `7bcac572ce56db69c1ea7c8af255c5d7c9672fc2` |
 | GitHub 镜像 | `https://ghfast.top/https://github.com/` |
 | Hugging Face 镜像 | `https://hf-mirror.com` |
 | Python 包镜像 | `https://pypi.tuna.tsinghua.edu.cn/simple` |
@@ -78,7 +80,7 @@
 
 已额外移除新环境中继承的 SAM-2 编辑安装引用，避免依赖锁指向其他项目源码或触发无关的 GitHub 原站下载。卸载范围仅为新环境中的包记录、`.pth` 和加载器文件；原环境及其源码未修改。
 
-`manifests/conda-cache-specs.txt` 仅是失败尝试使用的候选构建约束，**不是环境锁，也不是推荐的重新安装命令**。成功环境的 Conda 包记录为 [conda-explicit.txt](../manifests/conda-explicit.txt)。
+`manifests/conda-cache-specs.txt` 仅是失败尝试使用的候选构建约束，**不是环境锁，也不是推荐的重新安装命令**。成功环境的 Conda 包记录为 `manifests/conda-explicit.txt`（工作站记录，不随发布包上传）。
 
 ### 3.2 上游代码获取和审阅
 
@@ -172,6 +174,15 @@
 
 ## 4. 执行命令
 
+四个模型的资源准备使用同一个入口：
+
+```bash
+cd /home/user/cjx/GridPathPlanning
+bash scripts/run_phase4_v1.sh prepare all
+```
+
+单模型将`all`替换为`t5_base`、`t5_small`、`flan_t5_base`或`flan_t5_small`。下载使用工作站HF镜像，支持断点续传和文件校验，不启动训练。以下环境安装与验收记录保留其实际执行范围。
+
 ### 4.1 已执行的主要操作
 
 以下命令用于解释本次实际操作，**已有环境不必重新克隆或重复安装**：
@@ -227,7 +238,7 @@ python scripts/check_phase1.py --require-models
 
 该检查校验固定清单中的文件，依次在 **CPU** 加载两个模型，检查参数结构后释放；只做微小 CUDA 算子和 Trainer 构造，不调用 `train()`，不开展数据集评估。当前 `manifests/runtime.json` 已记录两个模型 `weights_loaded=true`，且 `phase1_acceptance=complete`。
 
-用户没有保存最终命令的终端日志，`logs/phase1/final-check.log` 不存在；本阶段以已有 `runtime.json` 的验收记录和新生成的 [phase1_recheck.json](../manifests/phase1_recheck.json)、[recheck.log](../logs/phase1/recheck.log) 为证据，不补造原始输出。如以后重新执行并需要保留输出，可额外使用 `tee`。
+用户没有保存最终命令的终端日志，`logs/phase1/final-check.log` 不存在；本阶段以已有 `runtime.json` 的验收记录和新生成的 [phase1_recheck.json](../manifests/phase1_recheck.json)、`logs/phase1/recheck.log`（工作站记录，不随发布包上传） 为证据，不补造原始输出。如以后重新执行并需要保留输出，可额外使用 `tee`。
 
 不想激活环境时，可把 `python ...` 替换为：
 
@@ -281,7 +292,7 @@ python scripts/check_phase1.py --require-models
 
 ## 7. 问题与后续处理
 
-2026-11-03 追加说明：用户确认增加课程中的 `facebook/bart-base` 作为第三基线，不是 BERT。为保留本阶段两份 T5 的文件清单与后续冻结哈希，新增模型使用独立 `manifests/bart_model.json` 和追加注册表 `configs/baselines.yaml`；完整状态与运行记录见 [阶段 4](./phase4.md)。原始 T5 与 Flan-T5 的决策不变；第三模型权重下载、GPU pilot 和三遍训练现已由用户完成并复核。
+当前模型范围为T5-base、T5-small、Flan-T5-base、Flan-T5-small，当前不含BART。版本清单按模型家族分别保存，已有实验的来源与哈希不改写。所有模型统一通过`bash scripts/run_phase4_v1.sh prepare <模型键>`下载与校验，`prepare all`准备全部四个模型；使用工作站HF镜像网络，不使用7899代理隧道。训练和评价流程见[阶段四第4节](phase4.md#4-执行命令)。
 
 | 问题 | 已采取的处理 | 剩余影响 |
 | --- | --- | --- |

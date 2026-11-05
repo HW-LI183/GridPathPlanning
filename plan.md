@@ -1,12 +1,12 @@
 # 网格路径规划项目推进计划：阶段三／四 v1
 
-> 更新：2026-11-05（北京时间）。本计划描述项目各阶段任务、完整执行顺序及当前进展。阶段一至四v1的开发实验已完成；修复开发R100全部无效，主模型为T5-base。阶段五与最终测试尚未开始。
+> 更新：2026-11-05（北京时间）。本计划描述项目各阶段任务、完整执行顺序及当前进展。四个基线采用相同流程；四模型训练和开发实验已完成，全体主选择为T5-base；修复开发R100全部无效。阶段五与最终测试尚未开始。
 
 ## 1. 阶段目标与范围
 
-研究小型编码器—解码器模型在单目标网格中的路径生成，以及执行器诊断能否通过复用生成模型改善错误路径。当前采用原始T5-base与T5-small，验证仅用执行器，两种修复为提示修复和前缀续写。
+研究小型编码器—解码器模型在单目标网格中的路径生成，以及执行器诊断能否通过复用生成模型改善错误路径。当前采用原始T5-base、T5-small与Flan-T5-base、Flan-T5-small，验证仅用执行器，两种修复为提示修复和前缀续写。
 
-阶段四v1的比较对象为两个模型各三条流程：直接生成、执行器＋提示修复、执行器＋前缀续写。生成能力、实际错误修复、受控候选修复和确定性截断贡献分别报告。
+阶段四v1的比较对象为四个模型各三条流程：直接生成、执行器＋提示修复、执行器＋前缀续写。生成能力、实际错误修复、受控候选修复和确定性截断贡献分别报告。
 
 当前暂不含模型自验证，故尚未覆盖课程原文的自验证必要对比；完整提交需明确该范围限制。不会把执行器分数描述为模型验证能力。
 
@@ -16,14 +16,14 @@
 | --- | --- |
 | 硬件 | 单张RTX A6000，约48GiB |
 | Python | `/home/user/miniconda3/bin/conda`，环境`gridpath` |
-| 模型 | 原始`google-t5/t5-base`、`google-t5/t5-small`，固定阶段一revision；不带Flan |
+| 模型 | `google-t5/t5-base`、`google-t5/t5-small`、`google/flan-t5-base`、`google/flan-t5-small`；分别固定revision |
 | 数据 | 6×6单目标、1–5障碍、固定seed42、布局隔离 |
 | 训练 | 4000条全部生成，三遍、batch4、LR1e-4、AdamW、BF16 |
 | 开发 | 100生成＋100修复，无独立验证配额；不更新参数 |
 | 测试 | ID单错/OOD双错各200episode，共享200环境；冻结后评价，不调参 |
 | 验证 | 严格符号执行器，完整序列终点语义 |
 | 修复 | 复用同一生成checkpoint，一次prompt修复或一次合法前缀续写 |
-| GPU预算 | 全项目20 GPU-hours；当前累计约1.57008小时，剩18.42992小时 |
+| GPU预算 | 全项目20 GPU-hours；当前累计约1.86964小时，剩18.13036小时 |
 | 运行授权 | 下载用工作站网络及HF/GitHub镜像；正式训练与长推理只提供命令，由用户执行 |
 
 负责人允许不单独训练V/R模型，当前配额按上表执行，数据按布局隔离。
@@ -32,7 +32,7 @@
 
 ### 3.1 阶段一：环境与模型固定（已完成）
 
-见[phase1.md](./docs/phase1.md)。固定两个原始T5、上游PPNL版本、conda环境、离线加载与下载镜像。保留原始模型文件，不再引入第三模型。
+见[phase1.md](./docs/phase1.md)。固定两个原始T5、上游PPNL版本、conda环境、离线加载与下载镜像。四模型使用固定版本和镜像资源，已训练模型的来源记录保持不变。
 
 ### 3.2 阶段二：执行语义与离线评分（已完成）
 
@@ -44,11 +44,11 @@
 
 4000条训练环境覆盖沿用既有776个训练布局；G100的内容与顺序固定，仅修复开发100个环境重新构造。测试保留原阶段三冻结环境与单/双编辑来源。来源索引与构造代码一并冻结，旧分配数据已删除。
 
-### 3.4 阶段四v1：训练及完整开发评价已完成
+### 3.4 阶段四v1：四模型训练与开发评价
 
-见[phase4.md](./docs/phase4.md)。两个模型从原始权重分别训练三遍，pilot包含在三遍中。每轮仅G100选best，并用固定train-seen100诊断拟合。最终在G100上比较端到端效果，在R100上比较相同受控候选修复。
+见[phase4.md](./docs/phase4.md)。四个模型从各自预训练权重分别训练三遍，pilot包含在三遍中。每轮仅G100选best，并用固定train-seen100诊断拟合。最终在G100上比较端到端效果，在R100上比较相同受控候选修复。
 
-两个模型均在第3轮取得best，G100直接生成base60%、small23%，主模型锁定base。prompt之后为64%、24%，prefix之后为67%、40%。全无效R100的prompt／prefix修复率为base58%／65%、small8%／19%。前缀方法改善成功率但可能增加路径长度；small的真实生成增益大多来自确定性截断。完整指标、分组和案例见阶段四文档。
+四模型均完成三遍、best均为第3遍，主模型按G100锁定T5-base。G100直接／提示／前缀成功率：T5-base为60%／64%／67%，T5-small为23%／24%／40%，Flan-base为56%／56%／60%，Flan-small为27%／33%／42%。R100提示／前缀修复率分别58%／65%、8%／19%、54%／53%、29%／31%。Flan并非一致改善；前缀收益需区分截断和实际后缀生成，路径最优性另报。
 
 ### 3.5 阶段五：有依据的核心改进（尚未开始）
 
@@ -66,67 +66,43 @@
 
 ## 4. 执行命令
 
-下表描述一次完整实验从准备到交付的顺序；当前开发流程已完成，不要求重新运行正式任务。全部正式训练与长推理由用户执行。
+四模型执行相同流程，使用`all`运行全体，或用`t5_base`、`t5_small`、`flan_t5_base`、`flan_t5_small`选择单个模型。
 
-| 顺序 | 阶段与命令 | 作用 |
+| 顺序 | 命令 | 作用 |
 | --- | --- | --- |
-| 1 | 按`docs/phase1.md`、`docs/phase2.md`准备并检查 | 固定环境、原始T5与执行语义 |
-| 2 | `python scripts/build_data.py` | 构造阶段三v1的4000G、G100/R100及冻结测试数据 |
-| 3 | `python scripts/audit_data.py` | 独立审计，通过后冻结数据 |
-| 4 | `python scripts/phase4.py preflight` | CPU检查数据、模型、绑定和预算 |
-| 5 | `pilot --model t5_base`，再`train --model t5_base` | base前10步pilot接续至三遍；**每遍末自动评价完整G100并选best** |
-| 6 | `pilot --model t5_small`，再`train --model t5_small` | small使用相同预算；同样自动评价G100 |
-| 7 | `python scripts/phase4.py select-primary` | 仅按两模型G100选主模型，不用R100或测试 |
-| 8 | `evaluate --model <模型> --split dev`，两模型各一次 | 最终生成端到端流程及受控R100的两种修复评价 |
-| 9 | `python scripts/phase4.py summarize --split dev` | 汇总当前JSON和CSV |
-| 10 | `python scripts/review_v1.py` | 短CPU重放、来源/CSV检查与绘图 |
-| 11 | 方法冻结后单独运行`test` | 最终ID/OOD评价，不用于调参 |
+| 1 | 阶段一、二环境及上游准备 | 固定依赖和执行语义 |
+| 2 | `bash scripts/run_phase4_v1.sh prepare all` | 工作站镜像下载并校验四模型，已有文件不重复下载 |
+| 3 | `python scripts/build_data.py`、`python scripts/audit_data.py` | 首次构造并审计4000G、G100/R100；已有冻结数据不重写 |
+| 4 | `bash scripts/run_phase4_v1.sh preflight all` | CPU检查文件、数据、长度、来源与预算 |
+| 5 | `bash scripts/run_phase4_v1.sh train all` | 每模型pilot接续三遍，每遍自动完整G100评价及best选择 |
+| 6 | `bash scripts/run_phase4_v1.sh select` | 四模型完成后只依据G100选择主模型 |
+| 7 | `bash scripts/run_phase4_v1.sh evaluate all` | 每模型G100生成/端到端流程和R100受控修复 |
+| 8 | `python scripts/review_v1.py` | 完整结果CPU复核与绘图 |
+| 9 | 方法冻结后`bash scripts/run_phase4_v1.sh test all` | 最终ID/OOD评价，不调参 |
 
-表中Python命令均应通过`/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath`执行；步骤5、6、8中省略的入口统一为`python scripts/phase4.py`。逐条可复制命令、报告路径和恢复方式完整写在[phase3.md第4节](./docs/phase3.md#4-执行命令)、[phase4.md第4节](./docs/phase4.md#4-执行命令)。
+Python命令通过`/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath`执行。从零复现见[README](README.md)，逐步指令与产物见[阶段四](docs/phase4.md#4-执行命令)。
 
-阶段三审计通过后，一键执行阶段四预检、两模型训练/每遍G100、主模型选择和最终开发评价：
+`prepare`不训练；`train`不隐式下载。`all all`只包含准备完资源后的训练与开发评价，不下载、不运行最终测试。模型各自使用独立检查点，重复执行会校验并跳过已完成工作；中断恢复保持三遍预算。四个模型均可单独使用`prepare <模型键>`、`preflight <模型键>`、`train <模型键>`、`evaluate <模型键>`。
 
-```bash
-cd /home/user/cjx/GridPathPlanning
-bash scripts/run_phase4_v1.sh all
-```
-
-然后短CPU复核与绘图：
-
-```bash
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/review_v1.py
-```
-
-`all`不自动构造数据、不运行最终测试；首次实验需要先完成阶段三。当前已完成目录会根据检查点和结果跳过已完成工作，不追加训练。只执行训练部分用`train`；只执行最终开发评价用`evaluate`。这两者是完整流程的分组入口，不取代训练和生成评价的说明。
-
-最终测试须在方法、提示、模型与调用预算冻结后，由用户另行执行：
-
-```bash
-bash scripts/run_phase4_v1.sh test
-```
-
-主要结果为`results/v1/summary_dev.json`、`metrics_dev.csv`、`review_dev.json`和`figures/`；日志为`logs/v1/`，检查点为`checkpoints/v1/`，主模型锁为`configs/primary_model_v1.json`。
+主要结果为`results/v1/summary_dev.json`、`metrics_dev.csv`、`review_dev.json`和`figures/`；日志为`logs/v1/`，检查点为`checkpoints/v1/`，四模型主锁为`configs/primary_model_v1_four.json`。既有双模型选择记录保留供核对，不代替全体选模。
 
 ## 5. 验证结果
 
-阶段三v1：train4000、dev200、ID200、OOD200，测试环境索引200；跨集合布局无交叉。详细CPU审计见`results/data_audit.json`。
+四模型各完成3000更新／12000次呈现，800个开发案例与24行CSV复核通过。四模型主锁选择T5-base第3遍，全部为开发结果，最终ID/OOD测试尚未运行。
 
-阶段四v1：两个模型均完整3000更新／12000样本呈现，G100结果及主模型base保留。当前开发结果如下：
+| 指标 | T5-base | T5-small | Flan-T5-base | Flan-T5-small |
+| --- | ---: | ---: | ---: | ---: |
+| G100直接生成成功率 | 60% | 23% | 56% | 27% |
+| G100提示修复后成功率 | 64% | 24% | 56% | 33% |
+| G100前缀续写后成功率 | 67% | 40% | 60% | 42% |
+| R100提示修复率 | 58% | 8% | 54% | 29% |
+| R100前缀续写修复率 | 65% | 19% | 53% | 31% |
 
-| 开发指标 | T5-base | T5-small |
-| --- | --- | --- |
-| G100直接成功率 | 60% | 23% |
-| G100＋prompt成功率 | 64% | 24% |
-| G100＋prefix成功率 | 67% | 40% |
-| 全无效R100 prompt修复率 | 58% | 8% |
-| 全无效R100 prefix修复率 | 65% | 19% |
-
-这些是开发成绩，不能称测试成绩。base真实生成的prefix增益7条中5条来自模型续写、2条来自截断；small的17条中仅3条来自续写、14条来自截断。R100的base prefix成功65条中57条来自模型续写、8条来自截断；small为11条续写、8条截断。base的prompt全部成功路径最短，而prefix的65条中46条最短，体现成功率与最优性取舍。详细分析、图和完整阶段运行顺序见[phase4.md](./docs/phase4.md)。
+直接生成和受控修复仍以T5-base最好。真实碰撞比受控单编辑更难修复，继续作为阶段五研究重点；模型指令微调背景、前缀截断与真正反馈利用应分别分析。完整结果与分母说明见[阶段四第5节](docs/phase4.md#5-验证结果)。
 
 ## 6. 资源使用记录
 
-正式训练与长推理由用户运行，GPU账本`manifests/gpu_budget.json`统一计入已发生和新发生的成本。清理旧尝试释放约25.5GiB，不重置历史用时。全无效R100复评没有重训，新增GPU会话合计18.565秒；当前账本累计1.57008小时、剩18.42992小时。CPU构造、审计、复核与绘图单独记录，不冒充GPU开销。
+正式训练与长推理由用户运行，GPU账本`manifests/gpu_budget.json`统一计入已发生和新发生的成本。清理旧尝试释放约25.5GiB，不重置历史用时。全无效R100复评没有重训，新增GPU会话合计18.565秒；当前账本累计1.86964小时、剩18.13036小时。CPU构造、审计、复核与绘图单独记录，不冒充GPU开销。
 
 当前无下载需求；后续若下载，使用工作站网络，HF/GitHub经镜像，不使用代理执行环境绕过用户要求。
 
@@ -150,3 +126,7 @@ bash scripts/run_phase4_v1.sh test
 
 
 项目发布与复现入口：[README](README.md)、[GitHub 建仓与低流量上传说明](docs/github_upload.md)。发布时使用白名单快照，不提交预训练权重、微调权重或优化器状态；历史工作站目录保留，重新训练使用独立复现目录。
+
+
+
+运行资源、训练与评价按第4节统一流程执行；全体选择与开发结果已更新。正式训练和长时间推理由用户启动，下载使用工作站镜像网络。

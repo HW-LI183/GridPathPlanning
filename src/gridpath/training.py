@@ -2,7 +2,7 @@
 import signal
 import time
 
-from .training_config import ROOT,binding_for,read_json,write_json,sha256
+from .training_config import ROOT,binding_for,read_json,write_json,sha256,model_keys,primary_lock_path
 from .training_helpers import (seed_everything,stream_indices,train_update,save_checkpoint,
     validate_checkpoint,load_training_state,require_gpu)
 from .resources import GPUBudget
@@ -155,7 +155,7 @@ def run_evaluation(model_key,split="dev"):
     manifest=read_json(ROOT/"manifests/dataset_manifest.json")
     if split=="dev":rows=dev
     elif split in ("test_id","test_ood"):
-        lock=read_json(ROOT/"configs/primary_model_v1.json")
+        lock=read_json(primary_lock_path())
         if lock["data_manifest_sha256"]!=sha256(ROOT/"manifests/dataset_manifest.json"):
             raise ValueError("最终测试需匹配当前开发选择锁")
         current=select_primary(write=False)
@@ -168,7 +168,8 @@ def run_evaluation(model_key,split="dev"):
         rows=generated+controlled
     else:raise ValueError("划分只能dev/test_id/test_ood")
     directory=ROOT/f"results/v1/{model_key}/{split}";directory.mkdir(parents=True,exist_ok=True)
-    if split=="dev" and (ROOT/"manifests/v1_training_lineage.json").exists():
+    if (split=="dev" and (ROOT/"manifests/v1_training_lineage.json").exists()
+            and model_key in read_json(ROOT/"manifests/v1_training_lineage.json")["models"]):
         entry=read_json(ROOT/"manifests/v1_training_lineage.json")["models"][model_key]
         for sample_id,expected in entry["retained_generation_cases"].items():
             path=directory/"cases"/f"{sample_id}.json"
@@ -226,13 +227,15 @@ def run_evaluation(model_key,split="dev"):
         return result
 
 
-def select_primary(write=True):
+def select_primary(write=True,models=None):
+    keys=tuple(models or model_keys())
+    path=primary_lock_path(keys)
     cards=[]
-    for key in ("t5_base","t5_small"):
+    for key in keys:
         cfg,_,_,binding=binding_for(key,verify_weights=False)
         run=ROOT/cfg["run_directory"];complete=read_json(run/"completed.json")
         if complete["fingerprint"]!=binding["fingerprint"] or complete["state"]["consumed_examples"]!=12000:
-            raise ValueError("两个模型须完成三遍")
+            raise ValueError("所有候选模型须完成三遍")
         meta=validate_checkpoint(run/"best",binding["fingerprint"])
         step=meta["state"]["best_step"]
         if step!=complete["state"]["best_step"]:raise ValueError("最佳快照与完成状态不一致")
@@ -241,10 +244,11 @@ def select_primary(write=True):
             raise ValueError("选模只接受当前G100完整报告")
         cards.append({"model":key,"step":step,"fingerprint":binding["fingerprint"],
             "model_sha256":meta["files"]["model.safetensors"],"metrics":report["dev_generate"]["metrics"]})
-    selected=max(cards,key=lambda c:(c["metrics"]["success_rate"],c["metrics"]["optimal_success_rate"],c["model"]=="t5_base"))
+    selected=max(cards,key=lambda c:(c["metrics"]["success_rate"],c["metrics"]["optimal_success_rate"],-keys.index(c["model"])))
     result={"version":"phase4.v1","selection":"仅dev_generate100；成功率、最优成功率，平局固定base",
         "data_manifest_sha256":sha256(ROOT/"manifests/dataset_manifest.json"),"selected":selected,"candidates":cards}
-    path=ROOT/"configs/primary_model_v1.json"
+    if len(keys)==4:
+        result["selection"]="仅dev_generate100；成功率、最优成功率，平局按注册顺序T5-base/T5-small/Flan-base/Flan-small"
     if write:
         if path.exists() and read_json(path)!=result:raise ValueError("主模型锁已有不同内容")
         write_json(path,result)

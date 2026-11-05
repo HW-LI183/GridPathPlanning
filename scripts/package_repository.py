@@ -20,8 +20,10 @@ def selection(root=ROOT):
     for folder in ('configs', 'docs', 'src', 'scripts', 'tests', 'data', 'results/v1'):
         selected.update(p for p in (root / folder).rglob('*') if p.is_file())
     selected.update(p for p in (root / 'manifests').glob('*.json') if p.is_file())
+    for name in ('results/data_audit.json', 'results/flan_preparation.json'):
+        if (root / name).is_file():selected.add(root / name)
     # 保留轻量训练证据；不遍历 _states，也不递归跟随 best/latest 链接。
-    for model in ('t5_base', 't5_small'):
+    for model in ('t5_base', 't5_small', 'flan_t5_base', 'flan_t5_small'):
         base = root / 'checkpoints/v1' / model
         selected.update(base.glob('*.json'))
         selected.update(base.glob('*.jsonl'))
@@ -30,6 +32,7 @@ def selection(root=ROOT):
             selected.add(base / 'best/checkpoint.json')
     return sorted(p for p in selected if p.is_file()
                   and '__pycache__' not in p.parts
+                  and 'cache' not in p.relative_to(root).parts
                   and p.suffix not in ('.pyc', '.part', '.lock')
                   and not any(part.startswith('.env') for part in p.relative_to(root).parts))
 

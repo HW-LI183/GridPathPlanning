@@ -20,10 +20,13 @@ def main():
     began=time.perf_counter()
     total=read_json(ROOT/"results/v1/summary_dev.json")
     assert total["complete"] and total["split"]=="dev"
-    assert read_json(ROOT/"configs/primary_model_v1.json")==select_primary(write=False)
+    from gridpath.training_config import primary_lock_path
+    models=tuple(total["models"])
+    assert total["complete"] and len(models) in (2,4)
+    assert read_json(primary_lock_path(models))==select_primary(write=False,models=tuple(total["models"]))
     review={"version":"phase4.v1","gpu_calls":0,"models":{}}
     case_examples={}
-    for model in ("t5_base","t5_small"):
+    for model in models:
         cfg,train,dev,binding=binding_for(model,verify_weights=False)
         run=ROOT/cfg["run_directory"]
         complete=read_json(run/"completed.json")
@@ -79,7 +82,7 @@ def main():
             "consumed_examples":12000,"fingerprint":binding["fingerprint"],"best_step":best["state"]["best_step"],
             "metrics_recomputed":True,"checkpoint_reference_reproduced":True,"candidate_traces_replayed":True}
     records=list(csv.DictReader((ROOT/"results/v1/metrics_dev.csv").open()))
-    assert len(records)==12
+    assert len(records)==6*len(models)
     for record in records:
         body=total["models"][record["model"]]["panels"][record["panel"]]
         metrics=body["direct"] if record["method"]=="direct" else body["repairs"][record["method"]]
@@ -87,7 +90,7 @@ def main():
             if key in ("model","panel","method"):continue
             assert value=="" if metrics.get(key) is None else float(value)==metrics[key]
     ledger=read_json(ROOT/"manifests/gpu_budget.json")
-    expected_labels={f"v1:{model}:{role}" for model in ("t5_base","t5_small")
+    expected_labels={f"v1:{model}:{role}" for model in models
                      for role in ("pilot","train","eval:dev")}
     entries=[e for e in ledger["entries"] if e["label"] in expected_labels]
     assert expected_labels<={e["label"] for e in entries if e["status"]=="complete"}
@@ -101,13 +104,15 @@ def main():
     receipt=read_json(ROOT/"manifests/phase4_checks.json")
     receipt.update(status="dev_completed_test_pending",results_review_sha256=sha256(ROOT/"results/v1/review_dev.json"),
         gpu_hours_remaining=20-review["gpu_hours_total"],user_training_completed=True)
-    for model in ("t5_base","t5_small"):
-        receipt["models"][model].update(status="complete",best_step=review["models"][model]["best_step"])
+    for model in models:
+        receipt["models"].setdefault(model,{}).update(status="complete",best_step=review["models"][model]["best_step"])
     receipt["assistant_formal_training_runs"]=receipt.pop("new_formal_training_runs",0)
     receipt["assistant_real_model_gpu_inference_calls"]=receipt.pop("new_real_model_gpu_inference_calls",0)
-    receipt["user_formal_training_model_count"]=2
+    receipt["user_formal_training_model_count"]=len(models)
+    if len(models)==4:
+        receipt.setdefault("baseline_extension",{}).update(status="four_models_dev_completed",reviewed_case_count=800)
     write_json(ROOT/"manifests/phase4_checks.json",receipt)
-    print(json.dumps({"status":"passed","case_count":400,"csv_matches":True,
+    print(json.dumps({"status":"passed","case_count":200*len(models),"csv_matches":True,
         "gpu_hours_total":review["gpu_hours_total"],"cpu_review_seconds":review["cpu_review_seconds"]},ensure_ascii=False))
 
 
@@ -120,21 +125,22 @@ def plot(total):
     plt.rcParams['font.family']=font.get_name()
     plt.rcParams['axes.unicode_minus']=False
     fig,axes=plt.subplots(1,3,figsize=(14,4.2),layout='constrained')
-    colors=['#2463a6','#e89c35'];models=('t5_base','t5_small')
+    colors=['#2463a6','#e89c35','#23966f','#9b59b6'];models=tuple(total['models'])
+    width=.8/len(models)
     for i,m in enumerate(models):
         r=total['models'][m]
         axes[0].plot([1,2,3],[e['dev_generate_metrics']['success_rate']*100 for e in r['training_curve']],
             marker='o',label=m,color=colors[i])
         body=r['panels']['generated']
         vals=[body['direct']['success_rate']*100,*[body['repairs'][k]['success_rate']*100 for k in ('prompt','prefix')]]
-        bars=axes[1].bar([x+i*.36 for x in range(3)],vals,width=.34,color=colors[i],label=m)
+        bars=axes[1].bar([x+(i-(len(models)-1)/2)*width for x in range(3)],vals,width=width*.95,color=colors[i],label=m)
         axes[1].bar_label(bars,fmt='%.0f%%',padding=3)
         vals=[r['panels']['controlled_repair']['repairs'][k]['repair_success_rate']*100 for k in ('prompt','prefix')]
-        bars=axes[2].bar([x+i*.36 for x in range(2)],vals,width=.34,color=colors[i],label=m)
+        bars=axes[2].bar([x+(i-(len(models)-1)/2)*width for x in range(2)],vals,width=width*.95,color=colors[i],label=m)
         axes[2].bar_label(bars,fmt='%.2f%%',padding=3)
     axes[0].set(title='训练中的G100开发成功率',xlabel='训练遍数',ylabel='成功率（%）',xticks=[1,2,3])
-    axes[1].set(title='G100真实生成端到端成功率',xticks=[.18,1.18,2.18],xticklabels=['直接生成','提示修复','前缀续写'])
-    axes[2].set(title='R100全部无效候选的修复率',xticks=[.18,1.18],xticklabels=['提示修复','前缀续写'])
+    axes[1].set(title='G100真实生成端到端成功率',xticks=[0,1,2],xticklabels=['直接生成','提示修复','前缀续写'])
+    axes[2].set(title='R100全部无效候选的修复率',xticks=[0,1],xticklabels=['提示修复','前缀续写'])
     for ax in axes:ax.set_ylim(0,100);ax.grid(axis='y',alpha=.2);ax.set_axisbelow(True)
     axes[0].legend();fig.suptitle('阶段四v1：开发集结果（单种子，非最终测试）',fontsize=13)
     destination=ROOT/'results/v1/figures';destination.mkdir(exist_ok=True)
