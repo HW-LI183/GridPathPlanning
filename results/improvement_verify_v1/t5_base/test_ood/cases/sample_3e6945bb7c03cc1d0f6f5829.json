@@ -1,0 +1,607 @@
+{
+  "sample_id": "sample_3e6945bb7c03cc1d0f6f5829",
+  "row_digest": "3f70e019db7bbef28f8562eae3007a152eb6019ca6f79360d8b585ee714e6fd5",
+  "initial": {
+    "text": "up right right right",
+    "generated_tokens": 5,
+    "failure": null
+  },
+  "initial_scoring": {
+    "interface_failure": null,
+    "execution": {
+      "success": true,
+      "feasible": true,
+      "first_error_step": null,
+      "error_reason": null,
+      "final_position": [
+        1,
+        3
+      ],
+      "executed_steps": 4,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "up",
+          "position_before": [
+            2,
+            0
+          ],
+          "attempted_position": [
+            1,
+            0
+          ],
+          "position_after": [
+            1,
+            0
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 2,
+          "action": "right",
+          "position_before": [
+            1,
+            0
+          ],
+          "attempted_position": [
+            1,
+            1
+          ],
+          "position_after": [
+            1,
+            1
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 3,
+          "action": "right",
+          "position_before": [
+            1,
+            1
+          ],
+          "attempted_position": [
+            1,
+            2
+          ],
+          "position_after": [
+            1,
+            2
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 4,
+          "action": "right",
+          "position_before": [
+            1,
+            2
+          ],
+          "attempted_position": [
+            1,
+            3
+          ],
+          "position_after": [
+            1,
+            3
+          ],
+          "error_reason": null
+        }
+      ],
+      "actions": [
+        "up",
+        "right",
+        "right",
+        "right"
+      ],
+      "verification_label": "valid"
+    }
+  },
+  "initial_success": true,
+  "executor_feedback": "valid",
+  "self_verification": {
+    "prompt": "Verify all actions. Grid rows 6 cols 6. Start row 2 col 0. Goal row 1 col 3. Obstacles: row 0 col 4; row 4 col 2.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 2 col 0 action up to row 1 col 0. Obstacle minus proposed offsets: dr -1 dc 4; dr 3 dc 2.\n<extra_id_0> step 2 from row 1 col 0 action right to row 1 col 1. Obstacle minus proposed offsets: dr -1 dc 3; dr 3 dc 1.\n<extra_id_0> step 3 from row 1 col 1 action right to row 1 col 2. Obstacle minus proposed offsets: dr -1 dc 2; dr 3 dc 0.\n<extra_id_0> step 4 from row 1 col 2 action right to row 1 col 3. Obstacle minus proposed offsets: dr -1 dc 1; dr 3 dc -1.\n<extra_id_1> END at row 1 col 3; goal row 1 col 3; goal minus end dr 0 dc 0.",
+    "prediction": {
+      "text": "valid",
+      "generated_tokens": 0,
+      "failure": null
+    },
+    "effective_label": "valid",
+    "detail": {
+      "tags": [
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "tag_names": [
+        "continue",
+        "continue",
+        "continue",
+        "continue",
+        "valid_end"
+      ],
+      "probabilities": [
+        [
+          0.9993042945861816,
+          0.00045463829883374274,
+          9.909357322612777e-05,
+          0.0001419449836248532,
+          0.0,
+          0.0
+        ],
+        [
+          0.9987874627113342,
+          0.0007975023472681642,
+          0.00011946784070460126,
+          0.000295685778837651,
+          0.0,
+          0.0
+        ],
+        [
+          0.9983512163162231,
+          0.0012443398591130972,
+          0.00013531568401958793,
+          0.000269107345957309,
+          0.0,
+          0.0
+        ],
+        [
+          0.9980859756469727,
+          0.0015361463883891702,
+          0.0001290848304051906,
+          0.00024881752324290574,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9992792010307312,
+          0.0007208380266092718
+        ]
+      ],
+      "input_tokens": 254,
+      "feedback_source": "language_model_step_tagging",
+      "executor_used": false
+    }
+  },
+  "outcomes": {
+    "self_prompt": {
+      "prediction": {
+        "text": "up right right right",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "feedback_source": "self",
+        "status": "self_valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            1,
+            3
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "up",
+              "position_before": [
+                2,
+                0
+              ],
+              "attempted_position": [
+                1,
+                0
+              ],
+              "position_after": [
+                1,
+                0
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                1,
+                0
+              ],
+              "attempted_position": [
+                1,
+                1
+              ],
+              "position_after": [
+                1,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "right",
+              "position_before": [
+                1,
+                1
+              ],
+              "attempted_position": [
+                1,
+                2
+              ],
+              "position_after": [
+                1,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "right",
+              "position_before": [
+                1,
+                2
+              ],
+              "attempted_position": [
+                1,
+                3
+              ],
+              "position_after": [
+                1,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "up",
+            "right",
+            "right",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "self_prefix": {
+      "prediction": {
+        "text": "up right right right",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "feedback_source": "self",
+        "status": "self_valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            1,
+            3
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "up",
+              "position_before": [
+                2,
+                0
+              ],
+              "attempted_position": [
+                1,
+                0
+              ],
+              "position_after": [
+                1,
+                0
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                1,
+                0
+              ],
+              "attempted_position": [
+                1,
+                1
+              ],
+              "position_after": [
+                1,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "right",
+              "position_before": [
+                1,
+                1
+              ],
+              "attempted_position": [
+                1,
+                2
+              ],
+              "position_after": [
+                1,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "right",
+              "position_before": [
+                1,
+                2
+              ],
+              "attempted_position": [
+                1,
+                3
+              ],
+              "position_after": [
+                1,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "up",
+            "right",
+            "right",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "executor_prompt": {
+      "prediction": {
+        "text": "up right right right",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "status": "valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            1,
+            3
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "up",
+              "position_before": [
+                2,
+                0
+              ],
+              "attempted_position": [
+                1,
+                0
+              ],
+              "position_after": [
+                1,
+                0
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                1,
+                0
+              ],
+              "attempted_position": [
+                1,
+                1
+              ],
+              "position_after": [
+                1,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "right",
+              "position_before": [
+                1,
+                1
+              ],
+              "attempted_position": [
+                1,
+                2
+              ],
+              "position_after": [
+                1,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "right",
+              "position_before": [
+                1,
+                2
+              ],
+              "attempted_position": [
+                1,
+                3
+              ],
+              "position_after": [
+                1,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "up",
+            "right",
+            "right",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "executor_prefix": {
+      "prediction": {
+        "text": "up right right right",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "status": "valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            1,
+            3
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "up",
+              "position_before": [
+                2,
+                0
+              ],
+              "attempted_position": [
+                1,
+                0
+              ],
+              "position_after": [
+                1,
+                0
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                1,
+                0
+              ],
+              "attempted_position": [
+                1,
+                1
+              ],
+              "position_after": [
+                1,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "right",
+              "position_before": [
+                1,
+                1
+              ],
+              "attempted_position": [
+                1,
+                2
+              ],
+              "position_after": [
+                1,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "right",
+              "position_before": [
+                1,
+                2
+              ],
+              "attempted_position": [
+                1,
+                3
+              ],
+              "position_after": [
+                1,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "up",
+            "right",
+            "right",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    }
+  },
+  "prediction_trace": [
+    {
+      "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 0 ). Goal ( 1 , 3 ). Obstacles ( 0 , 4 ) ; ( 4 , 2 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+      "prediction": {
+        "text": "up right right right",
+        "generated_tokens": 5,
+        "failure": null
+      }
+    }
+  ],
+  "feedback_model": "improvement_verify_v1"
+}

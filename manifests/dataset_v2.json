@@ -1,0 +1,126 @@
+{
+  "version": "phase3.v2.full",
+  "sources": {
+    "src/gridpath/experiments/data.py": "921e69974813a54ba1b1ab94344fe285a0c4d2d81d1e9c5201bd77ffac2e4c42",
+    "configs/experiment.yaml": "478d18c5f0f6e7a534b3b531c56e8f6f44cb7dc49f08111ff5644cdbd4714af4",
+    "data/specs/train_generate.jsonl": "356fb58b08a32def95138ba077cc939d459226469b0754439514e7be31cffd47",
+    "data/specs/train_verify.jsonl": "4244edd8540f5838f4fd226e59f68fa2f006b043f0412bea4d255e235628e75d",
+    "data/specs/dev_generate.jsonl": "b1531a121c727bfd96a63f3a95a4a6ab696ef19efc367fafff045f1b45259db8",
+    "data/specs/dev_verify.jsonl": "b9777159c7d888f25dbff3de7069672f9a6d65477252f99ebb696e5db950d9c8",
+    "data/specs/dev_repair_seeds.jsonl": "e193648d5e373052f0ca1303b9f75d2acba295726b8ae1bd1db1a111399407af",
+    "src/gridpath/executor.py": "12748dec8744949163c021bcf0f64437cc5b9f68cf13dc3c199e3498d860c2dc",
+    "src/gridpath/bfs.py": "8be5d1bd8fdc72a80afd402c1144e6114e6856cec0635504e134d501c5aa797d",
+    "src/gridpath/types.py": "d0d9586d5c1e1f1054a150dd6d8fd231892b54eb89c5cf2cb27210295bd20383",
+    "src/gridpath/data_schema.py": "ef6cf2bba6f1b4826b4e7a8cd6c7017bd6189d5bd7ae61dc0c8b7b9ba51f12bd",
+    "src/gridpath/corruptions.py": "d93a4f51ac5d6e42eedf8dc7b55e25d5f84aa4583e726da603aa28da6154fe38",
+    "src/gridpath/prompts.py": "7032ea6fdca71dd434887afbd4d34cf2719b10e2b9219ed90c1c01643e906318",
+    "src/gridpath/planning/events.py": "8793c4e5a312ff1771a3dd2b7b0c96f4abea286bf24b33c5bfc25e3609cb0d4a",
+    "src/gridpath/planning/protocol.py": "6b142913e7cfe69a41685c502772710c75a9ad86130f4599a227bba267b68c69",
+    "src/gridpath/v2/prompts.py": "18148f10d6f9a6a17af0726795340e67758e14dd708da45c194911b3831ad18d"
+  },
+  "files": {
+    "train_generate": {
+      "path": "data/v2/shared/train_generate.jsonl",
+      "sha256": "376ab1a0ee2d776041691fb4099ab3ce980cd79e85eb4458b5022ed4779ebe67",
+      "count": 3000
+    },
+    "train_verify": {
+      "path": "data/v2/shared/train_verify.jsonl",
+      "sha256": "e0b3900d46bcde5b3eb8bafe5c5dff63d955423632ca7508b9f26407cfeb0573",
+      "count": 1000
+    },
+    "dev_generate": {
+      "path": "data/v2/shared/dev_generate.jsonl",
+      "sha256": "f11ff458ad8b5e27410ff45e14bbdae4d43cd7d51283c46ad2ce7bc648da8692",
+      "count": 60
+    },
+    "dev_verify": {
+      "path": "data/v2/shared/dev_verify.jsonl",
+      "sha256": "a104643661464f57834704cb52821444dd1e730ca1a0ba545b672986c8bb5f19",
+      "count": 80
+    },
+    "dev_repair_seeds": {
+      "path": "data/v2/shared/dev_repair_seeds.jsonl",
+      "sha256": "fd81e12cbdbde3319e0b3cf20bd1465c9f8984e111e10dddc70458ccfe49dd38",
+      "count": 60
+    },
+    "test_id_generate": {
+      "path": "data/v2/shared/test_id_generate.jsonl",
+      "sha256": "bfb911bb982af13a4f71d1f2b5f5d23853285b92fc0760d305c87e36a34196b7",
+      "count": 60
+    },
+    "test_id_verify": {
+      "path": "data/v2/shared/test_id_verify.jsonl",
+      "sha256": "9961bab5cecb8f0b9e5621952a676b850184519cb255349a73c882c5841152d0",
+      "count": 80
+    },
+    "test_id_repair_seeds": {
+      "path": "data/v2/shared/test_id_repair_seeds.jsonl",
+      "sha256": "4c16fe44547880e5e4a503f8b5d4da8b5f417d840198dc1f2943749aaac2968b",
+      "count": 60
+    },
+    "test_ood_generate": {
+      "path": "data/v2/shared/test_ood_generate.jsonl",
+      "sha256": "33f5e1519aeeb0027f84efb1b3c19f799964bd6904f04ec83f5590124b71f421",
+      "count": 60
+    },
+    "test_ood_verify": {
+      "path": "data/v2/shared/test_ood_verify.jsonl",
+      "sha256": "1056dd170e7b884d1c5096398bf4ded8e49c00514d33ac025be03f7a82e2735d",
+      "count": 80
+    },
+    "test_ood_repair_seeds": {
+      "path": "data/v2/shared/test_ood_repair_seeds.jsonl",
+      "sha256": "6a89445d9728fcc16bf3b75173abcdd375475f96fa1e42d8d86d9b734eb9eceb",
+      "count": 60
+    },
+    "dev_samples": {
+      "path": "data/v2/shared/dev_samples.jsonl",
+      "sha256": "5207c573d00af0fc6f72d735f311b086056316ffb93d3f5866166d5505ea4061",
+      "count": 200
+    },
+    "dev_records": {
+      "path": "data/v2/shared/dev_records.jsonl",
+      "sha256": "2369efc914bc6b0c05e68a0b3f54cc441b8b01c89417cdd5202afa7bd64c9daf",
+      "count": 740
+    },
+    "test_id_samples": {
+      "path": "data/v2/shared/test_id_samples.jsonl",
+      "sha256": "3b2cca9d669b678b831031f2b519ac7d25d52c2a84de6df8dd3180d94d8751ac",
+      "count": 200
+    },
+    "test_id_records": {
+      "path": "data/v2/shared/test_id_records.jsonl",
+      "sha256": "ffca7262fac7b9ad7d513d30047bf7d378bcf5c454abea639e2cbcfdf8ab6624",
+      "count": 740
+    },
+    "test_ood_samples": {
+      "path": "data/v2/shared/test_ood_samples.jsonl",
+      "sha256": "3182e38902ce8b9056b482304e7ab5671dd8197b840b8ed96dde977e15579de6",
+      "count": 200
+    },
+    "test_ood_records": {
+      "path": "data/v2/shared/test_ood_records.jsonl",
+      "sha256": "1f4cf9077561528987b7e66a3b21698a1a49d7b7fd0206ce4d8584b8002403e0",
+      "count": 740
+    }
+  },
+  "train": {
+    "GENERATE": 3000,
+    "VERIFY": 1000,
+    "REPAIR": 0
+  },
+  "split_panels": {
+    "GENERATE": 60,
+    "VERIFY": 80,
+    "REPAIR": 60
+  },
+  "single_error_atomic_events": 1,
+  "multi_error_atomic_events": 2,
+  "test_pairing": "相同环境和参考路径；正例与G相同，负例分别1/2独立原子事件，不强制ID事件为OOD子集",
+  "hard_fraction_within_eligible_error_classes": [
+    2,
+    3
+  ],
+  "gpu_calls": 0
+}

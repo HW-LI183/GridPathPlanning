@@ -53,7 +53,7 @@ def main():
     for name in requirements:
         report["packages"][name] = importlib.metadata.version(name)
     if not report["cuda_available"]:
-        raise RuntimeError("当前进程无法访问 CUDA；请在工作站终端执行检查")
+        raise RuntimeError("当前进程无法访问 CUDA；请在实验设备终端执行检查")
     report["gpu_name"] = torch.cuda.get_device_name(0)
     report["gpu_memory_bytes"] = torch.cuda.get_device_properties(0).total_memory
     report["gpu_compute_capability"] = list(torch.cuda.get_device_capability(0))

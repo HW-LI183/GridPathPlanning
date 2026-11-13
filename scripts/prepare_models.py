@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""通过工作站镜像固定模型版本，下载并校验 PyTorch 所需文件。"""
+"""通过实验设备镜像固定模型版本，下载并校验 PyTorch 所需文件。"""
 
 import argparse
 import hashlib

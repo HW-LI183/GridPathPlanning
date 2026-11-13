@@ -1,0 +1,118 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_387029d7e11ec03b73183ccb",
+    "record_id": "test_ood:V:sample_387029d7e11ec03b73183ccb",
+    "source_sample_id": "sample_387029d7e11ec03b73183ccb",
+    "task": "VERIFY"
+  },
+  "fingerprint": "71110a017135d539f2bff736d477ea3e1bce3cd32ceffd96a49285ab218192d5",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 4 col 0. Goal row 1 col 5. Obstacles: row 0 col 3; row 1 col 3; row 3 col 4; row 4 col 4; row 5 col 2.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 4 col 0 action up to row 3 col 0. Obstacle minus proposed offsets: dr -3 dc 3; dr -2 dc 3; dr 0 dc 4; dr 1 dc 4; dr 2 dc 2.\n<extra_id_0> step 2 from row 3 col 0 action up to row 2 col 0. Obstacle minus proposed offsets: dr -2 dc 3; dr -1 dc 3; dr 1 dc 4; dr 2 dc 4; dr 3 dc 2.\n<extra_id_0> step 3 from row 2 col 0 action right to row 2 col 1. Obstacle minus proposed offsets: dr -2 dc 2; dr -1 dc 2; dr 1 dc 3; dr 2 dc 3; dr 3 dc 1.\n<extra_id_0> step 4 from row 2 col 1 action right to row 2 col 2. Obstacle minus proposed offsets: dr -2 dc 1; dr -1 dc 1; dr 1 dc 2; dr 2 dc 2; dr 3 dc 0.\n<extra_id_0> step 5 from row 2 col 2 action right to row 2 col 3. Obstacle minus proposed offsets: dr -2 dc 0; dr -1 dc 0; dr 1 dc 1; dr 2 dc 1; dr 3 dc -1.\n<extra_id_0> step 6 from row 2 col 3 action right to row 2 col 4. Obstacle minus proposed offsets: dr -2 dc -1; dr -1 dc -1; dr 1 dc 0; dr 2 dc 0; dr 3 dc -2.\n<extra_id_0> step 7 from row 2 col 4 action right to row 2 col 5. Obstacle minus proposed offsets: dr -2 dc -2; dr -1 dc -2; dr 1 dc -1; dr 2 dc -1; dr 3 dc -3.\n<extra_id_0> step 8 from row 2 col 5 action right to row 2 col 6. Obstacle minus proposed offsets: dr -2 dc -3; dr -1 dc -3; dr 1 dc -2; dr 2 dc -2; dr 3 dc -4.\n<extra_id_1> END at row 2 col 6; goal row 1 col 5; goal minus end dr -1 dc -1.",
+  "target_text": "invalid | step=8 | reason=out_of_bounds",
+  "prediction": {
+    "text": "invalid | step=8 | reason=out_of_bounds",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      5
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "out_of_bounds",
+      "goal_not_reached"
+    ],
+    "probabilities": [
+      [
+        0.969619870185852,
+        0.02793915569782257,
+        0.0013910086126998067,
+        0.0010499884374439716,
+        0.0,
+        0.0
+      ],
+      [
+        0.9478638172149658,
+        0.049456123262643814,
+        0.0011630963999778032,
+        0.0015169638209044933,
+        0.0,
+        0.0
+      ],
+      [
+        0.9242071509361267,
+        0.07324280589818954,
+        0.0014335964806377888,
+        0.001116486033424735,
+        0.0,
+        0.0
+      ],
+      [
+        0.953931987285614,
+        0.041102178394794464,
+        0.002327901776880026,
+        0.0026378582697361708,
+        0.0,
+        0.0
+      ],
+      [
+        0.9172996282577515,
+        0.07529653608798981,
+        0.003413315862417221,
+        0.0039905705489218235,
+        0.0,
+        0.0
+      ],
+      [
+        0.9580183625221252,
+        0.03787905350327492,
+        0.002337873913347721,
+        0.0017647198401391506,
+        0.0,
+        0.0
+      ],
+      [
+        0.9529156684875488,
+        0.040898311883211136,
+        0.004660924896597862,
+        0.001525048865005374,
+        0.0,
+        0.0
+      ],
+      [
+        0.0038199368864297867,
+        0.004465959034860134,
+        0.9872481226921082,
+        0.004465959034860134,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.47031086683273315,
+        0.5296891927719116
+      ]
+    ],
+    "input_tokens": 685,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

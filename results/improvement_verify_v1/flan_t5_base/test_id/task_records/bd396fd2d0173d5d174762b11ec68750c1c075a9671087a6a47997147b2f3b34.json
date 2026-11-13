@@ -1,0 +1,88 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_4bda33ddc5f0a093456e1c37",
+    "record_id": "test_id:V:sample_4bda33ddc5f0a093456e1c37",
+    "source_sample_id": "sample_4bda33ddc5f0a093456e1c37",
+    "task": "VERIFY"
+  },
+  "fingerprint": "b526ddfd94412468add3bb8989b6efaaf7e12b626b9c3f118f0bf144d6a440ee",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 0. Goal row 4 col 2. Obstacles: row 0 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 0 action left to row 5 col -1. Obstacle minus proposed offsets: dr -5 dc 2.\n<extra_id_0> step 2 from row 5 col -1 action right to row 5 col 0. Obstacle minus proposed offsets: dr -5 dc 1.\n<extra_id_0> step 3 from row 5 col 0 action up to row 4 col 0. Obstacle minus proposed offsets: dr -4 dc 1.\n<extra_id_0> step 4 from row 4 col 0 action right to row 4 col 1. Obstacle minus proposed offsets: dr -4 dc 0.\n<extra_id_0> step 5 from row 4 col 1 action right to row 4 col 2. Obstacle minus proposed offsets: dr -4 dc -1.\n<extra_id_1> END at row 4 col 2; goal row 4 col 2; goal minus end dr 0 dc 0.",
+  "target_text": "invalid | step=1 | reason=out_of_bounds",
+  "prediction": {
+    "text": "invalid | step=1 | reason=out_of_bounds",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      2,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "out_of_bounds",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.00032477499917149544,
+        0.00024135228886734694,
+        0.998872697353363,
+        0.0005611609085462987,
+        0.0,
+        0.0
+      ],
+      [
+        0.9956886172294617,
+        0.0006642707739956677,
+        0.0035078281071037054,
+        0.00013923872029408813,
+        0.0,
+        0.0
+      ],
+      [
+        0.99934321641922,
+        0.00045465599396266043,
+        0.00016338404384441674,
+        3.880711301462725e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9991082549095154,
+        0.0007263673469424248,
+        0.00012524145131465048,
+        4.002956484328024e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9988322854042053,
+        0.0010320909786969423,
+        9.304583363700658e-05,
+        4.259948036633432e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9990302324295044,
+        0.0009697519126348197
+      ]
+    ],
+    "input_tokens": 256,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

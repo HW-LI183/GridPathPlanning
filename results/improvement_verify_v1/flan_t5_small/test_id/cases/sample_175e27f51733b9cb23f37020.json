@@ -1,0 +1,407 @@
+{
+  "sample_id": "sample_175e27f51733b9cb23f37020",
+  "row_digest": "d9c44f36c04a4f61175c88f7113053e8528e08fe0f1190a9b0210c65b308a80b",
+  "initial": {
+    "text": "down right",
+    "generated_tokens": 3,
+    "failure": null
+  },
+  "initial_scoring": {
+    "interface_failure": null,
+    "execution": {
+      "success": true,
+      "feasible": true,
+      "first_error_step": null,
+      "error_reason": null,
+      "final_position": [
+        3,
+        3
+      ],
+      "executed_steps": 2,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "down",
+          "position_before": [
+            2,
+            2
+          ],
+          "attempted_position": [
+            3,
+            2
+          ],
+          "position_after": [
+            3,
+            2
+          ],
+          "error_reason": null
+        },
+        {
+          "step": 2,
+          "action": "right",
+          "position_before": [
+            3,
+            2
+          ],
+          "attempted_position": [
+            3,
+            3
+          ],
+          "position_after": [
+            3,
+            3
+          ],
+          "error_reason": null
+        }
+      ],
+      "actions": [
+        "down",
+        "right"
+      ],
+      "verification_label": "valid"
+    }
+  },
+  "initial_success": true,
+  "executor_feedback": "valid",
+  "self_verification": {
+    "prompt": "Verify all actions. Grid rows 6 cols 6. Start row 2 col 2. Goal row 3 col 3. Obstacles: row 2 col 0; row 2 col 5.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 2 col 2 action down to row 3 col 2. Obstacle minus proposed offsets: dr -1 dc -2; dr -1 dc 3.\n<extra_id_0> step 2 from row 3 col 2 action right to row 3 col 3. Obstacle minus proposed offsets: dr -1 dc -3; dr -1 dc 2.\n<extra_id_1> END at row 3 col 3; goal row 3 col 3; goal minus end dr 0 dc 0.",
+    "prediction": {
+      "text": "valid",
+      "generated_tokens": 0,
+      "failure": null
+    },
+    "effective_label": "valid",
+    "detail": {
+      "tags": [
+        0,
+        0,
+        4
+      ],
+      "tag_names": [
+        "continue",
+        "continue",
+        "valid_end"
+      ],
+      "probabilities": [
+        [
+          0.9811290502548218,
+          0.017588049173355103,
+          0.0008537037647329271,
+          0.00042926918831653893,
+          0.0,
+          0.0
+        ],
+        [
+          0.945088267326355,
+          0.05373641103506088,
+          0.0007487525581382215,
+          0.0004266263567842543,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9702399373054504,
+          0.029760094359517097
+        ]
+      ],
+      "input_tokens": 173,
+      "feedback_source": "language_model_step_tagging",
+      "executor_used": false
+    }
+  },
+  "outcomes": {
+    "self_prompt": {
+      "prediction": {
+        "text": "down right",
+        "generated_tokens": 3,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "feedback_source": "self",
+        "status": "self_valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            3,
+            3
+          ],
+          "executed_steps": 2,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                3,
+                3
+              ],
+              "position_after": [
+                3,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "down",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "self_prefix": {
+      "prediction": {
+        "text": "down right",
+        "generated_tokens": 3,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "feedback_source": "self",
+        "status": "self_valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            3,
+            3
+          ],
+          "executed_steps": 2,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                3,
+                3
+              ],
+              "position_after": [
+                3,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "down",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "executor_prompt": {
+      "prediction": {
+        "text": "down right",
+        "generated_tokens": 3,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "status": "valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            3,
+            3
+          ],
+          "executed_steps": 2,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                3,
+                3
+              ],
+              "position_after": [
+                3,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "down",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    },
+    "executor_prefix": {
+      "prediction": {
+        "text": "down right",
+        "generated_tokens": 3,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "valid",
+        "model_calls": 0,
+        "status": "valid_preserved"
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": true,
+          "feasible": true,
+          "first_error_step": null,
+          "error_reason": null,
+          "final_position": [
+            3,
+            3
+          ],
+          "executed_steps": 2,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "right",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                3,
+                3
+              ],
+              "position_after": [
+                3,
+                3
+              ],
+              "error_reason": null
+            }
+          ],
+          "actions": [
+            "down",
+            "right"
+          ],
+          "verification_label": "valid"
+        }
+      },
+      "success": true,
+      "feasible": true
+    }
+  },
+  "prediction_trace": [
+    {
+      "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 3 , 3 ). Obstacles ( 2 , 0 ) ; ( 2 , 5 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+      "prediction": {
+        "text": "down right",
+        "generated_tokens": 3,
+        "failure": null
+      }
+    }
+  ],
+  "feedback_model": "improvement_verify_v1"
+}

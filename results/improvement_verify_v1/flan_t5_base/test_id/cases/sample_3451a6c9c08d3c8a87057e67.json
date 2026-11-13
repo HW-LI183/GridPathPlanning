@@ -1,0 +1,703 @@
+{
+  "sample_id": "sample_3451a6c9c08d3c8a87057e67",
+  "row_digest": "2fe2bbea5d191d5186dcb241abc5ad1a4d15a7568b93bfe4c5e8293333f996e8",
+  "initial": {
+    "text": "right left up up",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "initial_scoring": {
+    "interface_failure": null,
+    "execution": {
+      "success": false,
+      "feasible": false,
+      "first_error_step": 1,
+      "error_reason": "obstacle_collision",
+      "final_position": [
+        2,
+        2
+      ],
+      "executed_steps": 0,
+      "full_trace": [
+        {
+          "step": 1,
+          "action": "right",
+          "position_before": [
+            2,
+            2
+          ],
+          "attempted_position": [
+            2,
+            3
+          ],
+          "position_after": [
+            2,
+            2
+          ],
+          "error_reason": "obstacle_collision"
+        }
+      ],
+      "actions": [
+        "right",
+        "left",
+        "up",
+        "up"
+      ],
+      "verification_label": "invalid | step=1 | reason=obstacle_collision"
+    }
+  },
+  "initial_success": false,
+  "executor_feedback": "invalid | step=1 | reason=obstacle_collision",
+  "self_verification": {
+    "prompt": "Verify all actions. Grid rows 6 cols 6. Start row 2 col 2. Goal row 0 col 2. Obstacles: row 2 col 3.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 2 col 2 action right to row 2 col 3. Obstacle minus proposed offsets: dr 0 dc 0.\n<extra_id_0> step 2 from row 2 col 3 action left to row 2 col 2. Obstacle minus proposed offsets: dr 0 dc 1.\n<extra_id_0> step 3 from row 2 col 2 action up to row 1 col 2. Obstacle minus proposed offsets: dr 1 dc 1.\n<extra_id_0> step 4 from row 1 col 2 action up to row 0 col 2. Obstacle minus proposed offsets: dr 2 dc 1.\n<extra_id_1> END at row 0 col 2; goal row 0 col 2; goal minus end dr 0 dc 0.",
+    "prediction": {
+      "text": "invalid | step=1 | reason=obstacle_collision",
+      "generated_tokens": 0,
+      "failure": null
+    },
+    "effective_label": "invalid | step=1 | reason=obstacle_collision",
+    "detail": {
+      "tags": [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      "tag_names": [
+        "obstacle_collision",
+        "continue",
+        "continue",
+        "continue",
+        "valid_end"
+      ],
+      "probabilities": [
+        [
+          0.006924227345734835,
+          0.9882779717445374,
+          0.0021283328533172607,
+          0.002669527428224683,
+          0.0,
+          0.0
+        ],
+        [
+          0.9982026815414429,
+          0.0013771536760032177,
+          0.0003454892721492797,
+          7.471730350516737e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.9991455078125,
+          0.0006511358078569174,
+          0.00016335172404069453,
+          4.0031060052569956e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.9988824725151062,
+          0.0009180068736895919,
+          0.0001607768499525264,
+          3.878922143485397e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9990745782852173,
+          0.0009253848693333566
+        ]
+      ],
+      "input_tokens": 215,
+      "feedback_source": "language_model_step_tagging",
+      "executor_used": false
+    }
+  },
+  "outcomes": {
+    "self_prompt": {
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "invalid | step=1 | reason=obstacle_collision",
+        "model_calls": 1,
+        "feedback_source": "self",
+        "status": "prompt_repair",
+        "prompt": "REPAIR\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: right left up up\nFeedback: invalid | step=1 | reason=obstacle_collision\nIf valid, copy candidate. Otherwise return the complete corrected path, actions only.",
+        "output": {
+          "text": "down down down left",
+          "generated_tokens": 5,
+          "failure": null
+        }
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": false,
+          "feasible": true,
+          "first_error_step": 5,
+          "error_reason": "goal_not_reached",
+          "final_position": [
+            5,
+            1
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "down",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                4,
+                2
+              ],
+              "position_after": [
+                4,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "down",
+              "position_before": [
+                4,
+                2
+              ],
+              "attempted_position": [
+                5,
+                2
+              ],
+              "position_after": [
+                5,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "left",
+              "position_before": [
+                5,
+                2
+              ],
+              "attempted_position": [
+                5,
+                1
+              ],
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 5,
+              "action": null,
+              "position_before": [
+                5,
+                1
+              ],
+              "attempted_position": null,
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": "goal_not_reached"
+            }
+          ],
+          "actions": [
+            "down",
+            "down",
+            "down",
+            "left"
+          ],
+          "verification_label": "invalid | step=5 | reason=goal_not_reached"
+        }
+      },
+      "success": false,
+      "feasible": true
+    },
+    "self_prefix": {
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "invalid | step=1 | reason=obstacle_collision",
+        "model_calls": 1,
+        "feedback_source": "self",
+        "prefix": [],
+        "claimed_step": 1,
+        "subproblem": {
+          "grid_size": [
+            6,
+            6
+          ],
+          "obstacles": [
+            [
+              2,
+              3
+            ]
+          ],
+          "start": [
+            2,
+            2
+          ],
+          "goal": [
+            0,
+            2
+          ]
+        },
+        "status": "prefix_regeneration",
+        "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+        "suffix": {
+          "text": "down down down left",
+          "generated_tokens": 5,
+          "failure": null
+        }
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": false,
+          "feasible": true,
+          "first_error_step": 5,
+          "error_reason": "goal_not_reached",
+          "final_position": [
+            5,
+            1
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "down",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                4,
+                2
+              ],
+              "position_after": [
+                4,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "down",
+              "position_before": [
+                4,
+                2
+              ],
+              "attempted_position": [
+                5,
+                2
+              ],
+              "position_after": [
+                5,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "left",
+              "position_before": [
+                5,
+                2
+              ],
+              "attempted_position": [
+                5,
+                1
+              ],
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 5,
+              "action": null,
+              "position_before": [
+                5,
+                1
+              ],
+              "attempted_position": null,
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": "goal_not_reached"
+            }
+          ],
+          "actions": [
+            "down",
+            "down",
+            "down",
+            "left"
+          ],
+          "verification_label": "invalid | step=5 | reason=goal_not_reached"
+        }
+      },
+      "success": false,
+      "feasible": true
+    },
+    "executor_prompt": {
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "invalid | step=1 | reason=obstacle_collision",
+        "model_calls": 1,
+        "status": "prompt_repair",
+        "prompt": "REPAIR\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: right left up up\nFeedback: invalid | step=1 | reason=obstacle_collision\nIf valid, copy candidate. Otherwise return the complete corrected path, actions only.",
+        "output": {
+          "text": "down down down left",
+          "generated_tokens": 5,
+          "failure": null
+        }
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": false,
+          "feasible": true,
+          "first_error_step": 5,
+          "error_reason": "goal_not_reached",
+          "final_position": [
+            5,
+            1
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "down",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                4,
+                2
+              ],
+              "position_after": [
+                4,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "down",
+              "position_before": [
+                4,
+                2
+              ],
+              "attempted_position": [
+                5,
+                2
+              ],
+              "position_after": [
+                5,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "left",
+              "position_before": [
+                5,
+                2
+              ],
+              "attempted_position": [
+                5,
+                1
+              ],
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 5,
+              "action": null,
+              "position_before": [
+                5,
+                1
+              ],
+              "attempted_position": null,
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": "goal_not_reached"
+            }
+          ],
+          "actions": [
+            "down",
+            "down",
+            "down",
+            "left"
+          ],
+          "verification_label": "invalid | step=5 | reason=goal_not_reached"
+        }
+      },
+      "success": false,
+      "feasible": true
+    },
+    "executor_prefix": {
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      },
+      "detail": {
+        "feedback": "invalid | step=1 | reason=obstacle_collision",
+        "model_calls": 1,
+        "prefix": [],
+        "subproblem": {
+          "grid_size": [
+            6,
+            6
+          ],
+          "obstacles": [
+            [
+              2,
+              3
+            ]
+          ],
+          "start": [
+            2,
+            2
+          ],
+          "goal": [
+            0,
+            2
+          ]
+        },
+        "status": "prefix_regeneration",
+        "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+        "suffix": {
+          "text": "down down down left",
+          "generated_tokens": 5,
+          "failure": null
+        }
+      },
+      "scoring": {
+        "interface_failure": null,
+        "execution": {
+          "success": false,
+          "feasible": true,
+          "first_error_step": 5,
+          "error_reason": "goal_not_reached",
+          "final_position": [
+            5,
+            1
+          ],
+          "executed_steps": 4,
+          "full_trace": [
+            {
+              "step": 1,
+              "action": "down",
+              "position_before": [
+                2,
+                2
+              ],
+              "attempted_position": [
+                3,
+                2
+              ],
+              "position_after": [
+                3,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 2,
+              "action": "down",
+              "position_before": [
+                3,
+                2
+              ],
+              "attempted_position": [
+                4,
+                2
+              ],
+              "position_after": [
+                4,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 3,
+              "action": "down",
+              "position_before": [
+                4,
+                2
+              ],
+              "attempted_position": [
+                5,
+                2
+              ],
+              "position_after": [
+                5,
+                2
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 4,
+              "action": "left",
+              "position_before": [
+                5,
+                2
+              ],
+              "attempted_position": [
+                5,
+                1
+              ],
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": null
+            },
+            {
+              "step": 5,
+              "action": null,
+              "position_before": [
+                5,
+                1
+              ],
+              "attempted_position": null,
+              "position_after": [
+                5,
+                1
+              ],
+              "error_reason": "goal_not_reached"
+            }
+          ],
+          "actions": [
+            "down",
+            "down",
+            "down",
+            "left"
+          ],
+          "verification_label": "invalid | step=5 | reason=goal_not_reached"
+        }
+      },
+      "success": false,
+      "feasible": true
+    }
+  },
+  "prediction_trace": [
+    {
+      "prompt": "REPAIR\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: right left up up\nFeedback: invalid | step=1 | reason=obstacle_collision\nIf valid, copy candidate. Otherwise return the complete corrected path, actions only.",
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      }
+    },
+    {
+      "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      }
+    },
+    {
+      "prompt": "REPAIR\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: right left up up\nFeedback: invalid | step=1 | reason=obstacle_collision\nIf valid, copy candidate. Otherwise return the complete corrected path, actions only.",
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      }
+    },
+    {
+      "prompt": "GENERATE\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 2 ). Goal ( 0 , 2 ). Obstacles ( 2 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nReturn only a shortest path as space-separated actions.",
+      "prediction": {
+        "text": "down down down left",
+        "generated_tokens": 5,
+        "failure": null
+      }
+    }
+  ],
+  "feedback_model": "improvement_verify_v1"
+}

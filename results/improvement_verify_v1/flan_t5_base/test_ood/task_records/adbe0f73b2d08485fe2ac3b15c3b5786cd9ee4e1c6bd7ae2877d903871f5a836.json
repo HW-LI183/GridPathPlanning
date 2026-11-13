@@ -1,0 +1,128 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_71ba99d39230763d877c21bd",
+    "record_id": "test_ood:V:sample_71ba99d39230763d877c21bd",
+    "source_sample_id": "sample_71ba99d39230763d877c21bd",
+    "task": "VERIFY"
+  },
+  "fingerprint": "d0ce7aa9b351902395c7981fc52dc5e0056c77855d8fbd5d0c1b74e667027a7e",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 5. Goal row 0 col 3. Obstacles: row 1 col 4; row 4 col 4.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 5 action up to row 4 col 5. Obstacle minus proposed offsets: dr -3 dc -1; dr 0 dc -1.\n<extra_id_0> step 2 from row 4 col 5 action up to row 3 col 5. Obstacle minus proposed offsets: dr -2 dc -1; dr 1 dc -1.\n<extra_id_0> step 3 from row 3 col 5 action up to row 2 col 5. Obstacle minus proposed offsets: dr -1 dc -1; dr 2 dc -1.\n<extra_id_0> step 4 from row 2 col 5 action up to row 1 col 5. Obstacle minus proposed offsets: dr 0 dc -1; dr 3 dc -1.\n<extra_id_0> step 5 from row 1 col 5 action jump to row 1 col 5. Obstacle minus proposed offsets: dr 0 dc -1; dr 3 dc -1.\n<extra_id_0> step 6 from row 1 col 5 action left to row 1 col 4. Obstacle minus proposed offsets: dr 0 dc 0; dr 3 dc 0.\n<extra_id_0> step 7 from row 1 col 4 action left to row 1 col 3. Obstacle minus proposed offsets: dr 0 dc 1; dr 3 dc 1.\n<extra_id_0> step 8 from row 1 col 3 action up to row 0 col 3. Obstacle minus proposed offsets: dr 1 dc 1; dr 4 dc 1.\n<extra_id_0> step 9 from row 0 col 3 action down to row 1 col 3. Obstacle minus proposed offsets: dr 0 dc 1; dr 3 dc 1.\n<extra_id_1> END at row 1 col 3; goal row 0 col 3; goal minus end dr -1 dc 0.",
+  "target_text": "invalid | step=5 | reason=invalid_action_token",
+  "prediction": {
+    "text": "invalid | step=5 | reason=invalid_action_token",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      1,
+      0,
+      0,
+      0,
+      5
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "invalid_action_token",
+      "obstacle_collision",
+      "continue",
+      "continue",
+      "continue",
+      "goal_not_reached"
+    ],
+    "probabilities": [
+      [
+        0.9994138479232788,
+        0.00036821767571382225,
+        0.00017667275096755475,
+        4.131287641939707e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9994423985481262,
+        0.000340555387083441,
+        0.00017946008301805705,
+        3.761687548831105e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.99928218126297,
+        0.00043380926945246756,
+        0.0002414512273389846,
+        4.261867070454173e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9992087483406067,
+        0.0004915341851301491,
+        0.0002530200872570276,
+        4.680401616496965e-05,
+        0.0,
+        0.0
+      ],
+      [
+        8.883397822501138e-05,
+        0.00018806153093464673,
+        0.0003392077924218029,
+        0.999383807182312,
+        0.0,
+        0.0
+      ],
+      [
+        0.005276761017739773,
+        0.9899827837944031,
+        0.0020664094481617212,
+        0.0026741325855255127,
+        0.0,
+        0.0
+      ],
+      [
+        0.999100923538208,
+        0.0006613600999116898,
+        0.00020013378525618464,
+        3.76040225091856e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9992989301681519,
+        0.0005192104144953191,
+        0.00015347830776590854,
+        2.839063381543383e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9991088509559631,
+        0.0007263678126037121,
+        0.00013541837688535452,
+        2.9286276912898757e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0012065897462889552,
+        0.998793363571167
+      ]
+    ],
+    "input_tokens": 489,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

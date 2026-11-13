@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_0b4b06d373ddd1895a22c36e",
+    "record_id": "dev:V:sample_0b4b06d373ddd1895a22c36e",
+    "source_sample_id": "sample_0b4b06d373ddd1895a22c36e",
+    "task": "VERIFY"
+  },
+  "fingerprint": "77353f95d94b2cd8ede80d2e2b632d4a3386c6f5475c05b85e933721b2b0467b",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 4 col 3. Goal row 1 col 3. Obstacles: row 3 col 5; row 5 col 4.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 4 col 3 action up to row 3 col 3. Obstacle minus proposed offsets: dr 0 dc 2; dr 2 dc 1.\n<extra_id_0> step 2 from row 3 col 3 action up to row 2 col 3. Obstacle minus proposed offsets: dr 1 dc 2; dr 3 dc 1.\n<extra_id_0> step 3 from row 2 col 3 action up to row 1 col 3. Obstacle minus proposed offsets: dr 2 dc 2; dr 4 dc 1.\n<extra_id_1> END at row 1 col 3; goal row 1 col 3; goal minus end dr 0 dc 0.",
+  "target_text": "valid",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9992926120758057,
+        0.0004993166658096015,
+        7.249756890814751e-05,
+        0.00013544327521231025,
+        0.0,
+        0.0
+      ],
+      [
+        0.9982084035873413,
+        0.0014890668680891395,
+        0.00010871365520870313,
+        0.00019380303274374455,
+        0.0,
+        0.0
+      ],
+      [
+        0.998166024684906,
+        0.0016611033352091908,
+        6.593536090804264e-05,
+        0.00010702366125769913,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9993435740470886,
+        0.000656372809316963
+      ]
+    ],
+    "input_tokens": 205,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

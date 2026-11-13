@@ -17,7 +17,7 @@
 | 项目 | 设置 |
 | --- | --- |
 | 模型 | `google-t5/t5-base`、`google-t5/t5-small`、`google/flan-t5-base`、`google/flan-t5-small`；两组分别固定revision |
-| GPU与环境 | RTX A6000；`/home/user/miniconda3/bin/conda`，环境`gridpath` |
+| GPU与环境 | RTX A6000；`conda`，环境`gridpath` |
 | 数据 | 4000G；开发100G＋100R；无V/R微调 |
 | 更新 | 三遍、有效batch4、microbatch4，共3000更新／12000次样本呈现 |
 | 优化 | 全参数AdamW，LR `1e-4`，预热12更新后恒定，weight decay `0.01`，梯度裁剪1.0 |
@@ -88,152 +88,7 @@
 
 ## 4. 执行命令
 
-四个模型使用同一套命令。第二个参数是模型键，省略或使用`all`表示全部模型；训练、开发评价和最终测试分别启动，资源准备不会自动触发训练。
-
-| 模型 | 模型键 | 预训练目录 | 训练与best目录 |
-| --- | --- | --- | --- |
-| T5-base | `t5_base` | `models/t5-base` | `checkpoints/v1/t5_base/` |
-| T5-small | `t5_small` | `models/t5-small` | `checkpoints/v1/t5_small/` |
-| Flan-T5-base | `flan_t5_base` | `models/flan-t5-base` | `checkpoints/v1/flan_t5_base/` |
-| Flan-T5-small | `flan_t5_small` | `models/flan-t5-small` | `checkpoints/v1/flan_t5_small/` |
-
-### 4.1 环境与数据
-
-先按[阶段一](phase1.md)准备conda环境和上游PPNL代码，再按[阶段三](phase3.md)构造4000G、开发G100/R100并审计。已有通过审计的冻结数据无需重复构造，不通过改写数据重新开始已完成的实验。
-
-```bash
-cd /home/user/cjx/GridPathPlanning
-mkdir -p logs/v1
-```
-
-首次从零复现的完整工作目录准备见[README](../README.md)；已有工作目录保留训练状态、数据哈希和GPU账本。
-
-### 4.2 准备预训练模型
-
-```bash
-# 四个模型：下载缺失资源，已有完整文件只校验，不重新下载。
-bash scripts/run_phase4_v1.sh prepare all
-```
-
-也可以逐个准备，四条命令完全等价：
-
-```bash
-bash scripts/run_phase4_v1.sh prepare t5_base
-bash scripts/run_phase4_v1.sh prepare t5_small
-bash scripts/run_phase4_v1.sh prepare flan_t5_base
-bash scripts/run_phase4_v1.sh prepare flan_t5_small
-```
-
-`prepare`通过工作站网络访问`https://hf-mirror.com`，仅在当前下载进程取消代理环境变量，不使用7899隧道；使用固定revision，支持断点续传并校验哈希，不改写模型清单。下载日志为`logs/v1/<模型键>_prepare.log`。全部预训练权重约2.432 GB；按模型选择下载可避免获取暂时不使用的资源。
-
-资源缺失时必须先完成本步骤。`train`不会隐式下载，也不会在下载失败后继续启动训练。
-
-### 4.3 CPU预检
-
-```bash
-bash scripts/run_phase4_v1.sh preflight all
-# 单模型检查示例；模型键可替换为表中任意一项。
-bash scripts/run_phase4_v1.sh preflight t5_base
-```
-
-预检验证数据、固定版本、文件哈希、输入/目标长度、训练来源和剩余GPU预算，不加载模型权重做预测。产物为`results/v1/preflight.json`，日志为`logs/v1/preflight.log`。缺失资源会在终端显示对应`prepare <模型键>`指令，并在训练开始前退出。
-
-四模型使用各自tokenizer。分词专项检查见`results/flan_preparation.json`及阶段三审计：Flan训练输入最长157、目标12、开发修复输入183，72动作修复上下文244 tokens，均在512/256限制内且无未知词。
-
-### 4.4 pilot与三遍训练
-
-以下为正式训练，由用户执行。每个模型先运行10更新pilot，再从该状态续至总计3000更新；pilot计入三遍，不额外增加训练样本呈现次数。
-
-```bash
-# 顺序运行全部模型；已完成的模型校验后跳过，不重新训练。
-bash scripts/run_phase4_v1.sh train all
-```
-
-逐模型运行方式：
-
-```bash
-bash scripts/run_phase4_v1.sh train t5_base
-bash scripts/run_phase4_v1.sh train t5_small
-bash scripts/run_phase4_v1.sh train flan_t5_base
-bash scripts/run_phase4_v1.sh train flan_t5_small
-```
-
-**G100评价包含在训练内部**：第1000、2000、3000更新末自动运行完整G100生成/NLL及固定train-seen100诊断，按G100选择best；R100不参与训练和选模。日志为`logs/v1/<模型键>_pilot.log`、`<模型键>_train.log`，逐遍报告为`checkpoints/v1/<模型键>/evaluations/step_1000.json`、`step_2000.json`、`step_3000.json`。
-
-需要分别检查pilot时，可对任意模型使用同样的底层接口：
-
-```bash
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/phase4.py pilot --model t5_base
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/phase4.py train --model t5_base
-```
-
-模型键替换为其他三项即可。单模型训练完成不会因为其他模型未训练而报错；四模型均完成时入口自动执行全体选模。
-
-### 4.5 生成开发集选模
-
-```bash
-bash scripts/run_phase4_v1.sh select
-```
-
-此步只做CPU检查。要求四个模型都完成三遍，比较各自best的G100成功率、最优成功率；完全同分按T5-base、T5-small、Flan-T5-base、Flan-T5-small的固定顺序。结果写入`configs/primary_model_v1_four.json`，不使用R100或测试结果，也不跨tokenizer比较NLL。训练末已自动完成相同选模时，重复执行只核验相同内容。
-
-### 4.6 生成与修复开发评价
-
-以下为正式批量推理，由用户执行：
-
-```bash
-bash scripts/run_phase4_v1.sh evaluate all
-```
-
-也可逐个执行：
-
-```bash
-bash scripts/run_phase4_v1.sh evaluate t5_base
-bash scripts/run_phase4_v1.sh evaluate t5_small
-bash scripts/run_phase4_v1.sh evaluate flan_t5_base
-bash scripts/run_phase4_v1.sh evaluate flan_t5_small
-```
-
-每个模型都评价两个面板：G100运行直接生成、执行器＋提示修复、执行器＋前缀续写三条流程；R100对相同100条无效候选比较两种修复。共享相同初始候选，逻辑调用与缓存命中分开统计。结果为`results/v1/<模型键>/dev/summary.json`及`cases/`，日志为`logs/v1/<模型键>_dev.log`。
-
-训练内的G100报告用于选best；本步骤补齐两种修复和R100，是完整开发流程评价。已有完整且绑定一致的结果直接复用。
-
-### 4.7 汇总、CPU复核与绘图
-
-`evaluate`结束后自动汇总已有模型。也可手动执行：
-
-```bash
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/phase4.py summarize
-
-# 四模型开发评价全部完成后执行。
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/review_v1.py > logs/v1/review_dev.log 2>&1
-```
-
-完整交付包括`results/v1/summary_dev.json`、24行`metrics_dev.csv`、800条模型×样本案例、`review_dev.json`及`figures/`。四模型尚未全部完成时，汇总`complete=false`，已有模型成绩仍保留。CPU复核重放轨迹、核对JSON/CSV、训练连续性与选模结果，不调用模型推理。当前800例、24行指标已通过该检查。
-
-### 4.8 一键运行、恢复与最终测试
-
-```bash
-# 已完成资源准备和数据审计后，执行训练及开发评价；不下载、不运行最终测试。
-bash scripts/run_phase4_v1.sh all all
-# 单模型使用相同模式。
-bash scripts/run_phase4_v1.sh all t5_base
-```
-
-正常中断后重复相同命令，从latest恢复AdamW、scheduler和RNG，不重放pilot；已完成三遍的模型不增加训练。评价复用绑定一致的案例与缓存。若进程被强制终止并留下running账本，确认原进程停止后再使用`close_interrupted_run.py`结账，不删除历史账本。四模型都遵守全项目20 GPU-hours预算。
-
-模型、方法、提示及调用预算冻结且主模型锁有效后，才由用户执行最终测试：
-
-```bash
-bash scripts/run_phase4_v1.sh test all
-```
-
-每个测试集200个episode，生成和受控修复面板使用相同环境；ID/OOD共享网格，变化是候选的单错/双错。结果不用于调参。每个模型也支持`test <模型键>`，仍要求四模型主选择锁有效。
-
+先创建独立复现目录；环境、数据、训练与评价的完整顺序见[复现说明](reproduce.md)。公开结果只读保留，不在此目录继续训练或覆盖汇总。
 
 ## 5. 验证结果
 
@@ -259,7 +114,7 @@ bash scripts/run_phase4_v1.sh test all
 
 ![四模型开发结果](../results/v1/figures/dev_overview.png)
 
-[图表PDF](../results/v1/figures/dev_overview.pdf)。
+[图表PDF](../results/v1/figures/dev_overview.png)。
 
 ### 5.3 训练曲线与拟合情况
 
@@ -366,18 +221,7 @@ G100和R100每种障碍数均20条。完整障碍数、参考距离及原首错�
 
 ## 6. 资源使用记录
 
-全项目累计使用**1.86964 GPU-hours**，剩余**18.13036小时**；20小时上限不变，历史探索、失败与复评成本仍保留。四模型v1相关会话累计2000.95秒（约0.55582 GPU-hours），其中包含训练、pilot、正式评价及已发生复评，不能当作四个最终评价进程的简单运行时间。
-
-| 模型 | pilot＋训练wall秒 | 开发评价wall秒（含历史复评） | 本次结果记录的新调用数 | 本次生成token/s |
-| --- | ---: | ---: | ---: | ---: |
-| T5-base | 630.27 | 29.59 | 192 | 94.92 |
-| T5-small | 242.05 | 20.65 | 192 | 176.46 |
-| Flan-T5-base | 711.17 | 22.92 | 371 | 87.29 |
-| Flan-T5-small | 325.84 | 18.47 | 420 | 127.74 |
-
-新调用数是该结果保存会话的计数，受是否复用既有G100案例与缓存影响：原T5的结果记录对应R100复评，而Flan记录覆盖完整开发评价，不能据此直接比较两模型的完整部署耗时。方法逻辑修复调用见CSV；公平成本对比应使用相同面板和缓存条件。
-
-本次整理只做CPU文件/分词校验、既有结果复核、文档和发布包整理，未启动正式训练或真实模型GPU推理。原始权重、优化器状态、冻结数据及全部GPU账本保留；只清理可再生的软件缓存。最终测试仍未运行。
+实验参考GPU为RTX A6000；样本暴露、训练更新与成本摘要见`results/training_summary.json`。公开副本不提供设备名称、系统路径、环境转储、空闲磁盘或连接配置。读者独立运行应记录自己的实际成本。
 
 ## 7. 问题与后续处理
 

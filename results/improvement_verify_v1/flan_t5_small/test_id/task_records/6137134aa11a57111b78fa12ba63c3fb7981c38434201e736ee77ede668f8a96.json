@@ -1,0 +1,118 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_d46a6938f2aadf90155d484e",
+    "record_id": "test_id:V:sample_d46a6938f2aadf90155d484e",
+    "source_sample_id": "sample_d46a6938f2aadf90155d484e",
+    "task": "VERIFY"
+  },
+  "fingerprint": "18f9730bdff507c455acea4685470296e4769ec34bf1ccae3d571c99b113c3b0",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 4 col 0. Goal row 1 col 5. Obstacles: row 0 col 3; row 1 col 3; row 3 col 4; row 4 col 4; row 5 col 2.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 4 col 0 action up to row 3 col 0. Obstacle minus proposed offsets: dr -3 dc 3; dr -2 dc 3; dr 0 dc 4; dr 1 dc 4; dr 2 dc 2.\n<extra_id_0> step 2 from row 3 col 0 action right to row 3 col 1. Obstacle minus proposed offsets: dr -3 dc 2; dr -2 dc 2; dr 0 dc 3; dr 1 dc 3; dr 2 dc 1.\n<extra_id_0> step 3 from row 3 col 1 action right to row 3 col 2. Obstacle minus proposed offsets: dr -3 dc 1; dr -2 dc 1; dr 0 dc 2; dr 1 dc 2; dr 2 dc 0.\n<extra_id_0> step 4 from row 3 col 2 action right to row 3 col 3. Obstacle minus proposed offsets: dr -3 dc 0; dr -2 dc 0; dr 0 dc 1; dr 1 dc 1; dr 2 dc -1.\n<extra_id_0> step 5 from row 3 col 3 action right to row 3 col 4. Obstacle minus proposed offsets: dr -3 dc -1; dr -2 dc -1; dr 0 dc 0; dr 1 dc 0; dr 2 dc -2.\n<extra_id_0> step 6 from row 3 col 4 action right to row 3 col 5. Obstacle minus proposed offsets: dr -3 dc -2; dr -2 dc -2; dr 0 dc -1; dr 1 dc -1; dr 2 dc -3.\n<extra_id_0> step 7 from row 3 col 5 action right to row 3 col 6. Obstacle minus proposed offsets: dr -3 dc -3; dr -2 dc -3; dr 0 dc -2; dr 1 dc -2; dr 2 dc -4.\n<extra_id_0> step 8 from row 3 col 6 action right to row 3 col 7. Obstacle minus proposed offsets: dr -3 dc -4; dr -2 dc -4; dr 0 dc -3; dr 1 dc -3; dr 2 dc -5.\n<extra_id_1> END at row 3 col 7; goal row 1 col 5; goal minus end dr -2 dc -2.",
+  "target_text": "invalid | step=5 | reason=obstacle_collision",
+  "prediction": {
+    "text": "invalid | step=7 | reason=out_of_bounds",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      2,
+      5
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "out_of_bounds",
+      "out_of_bounds",
+      "goal_not_reached"
+    ],
+    "probabilities": [
+      [
+        0.9775071740150452,
+        0.02101343311369419,
+        0.0008373657474294305,
+        0.0006420306162908673,
+        0.0,
+        0.0
+      ],
+      [
+        0.9430293440818787,
+        0.05575529485940933,
+        0.0007829765090718865,
+        0.0004324006731621921,
+        0.0,
+        0.0
+      ],
+      [
+        0.9140611886978149,
+        0.0843592956662178,
+        0.0007589248707517982,
+        0.0008205934427678585,
+        0.0,
+        0.0
+      ],
+      [
+        0.9386184811592102,
+        0.05907360091805458,
+        0.0012260334333404899,
+        0.0010819707531481981,
+        0.0,
+        0.0
+      ],
+      [
+        0.9561276435852051,
+        0.04233879968523979,
+        0.0008856056374497712,
+        0.0006479229195974767,
+        0.0,
+        0.0
+      ],
+      [
+        0.9596629738807678,
+        0.038541607558727264,
+        0.0013553804019466043,
+        0.0004400275938678533,
+        0.0,
+        0.0
+      ],
+      [
+        0.0045471107587218285,
+        0.0028903193306177855,
+        0.9896036386489868,
+        0.0029588614124804735,
+        0.0,
+        0.0
+      ],
+      [
+        0.45310133695602417,
+        0.04280867800116539,
+        0.4937618672847748,
+        0.010328073985874653,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.021287351846694946,
+        0.9787126779556274
+      ]
+    ],
+    "input_tokens": 706,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

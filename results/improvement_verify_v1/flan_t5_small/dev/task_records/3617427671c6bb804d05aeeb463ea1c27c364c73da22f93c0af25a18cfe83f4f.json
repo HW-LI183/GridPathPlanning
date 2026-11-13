@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_acddd2d73fe7ce5fe4b5ee83",
+    "record_id": "dev:V:sample_acddd2d73fe7ce5fe4b5ee83",
+    "source_sample_id": "sample_acddd2d73fe7ce5fe4b5ee83",
+    "task": "VERIFY"
+  },
+  "fingerprint": "83f6e9b0fe3932e51f6fb22db5f10311a872c9989bd7760dc1a5e73c13982016",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 0 col 4. Goal row 2 col 3. Obstacles: row 1 col 4; row 4 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 0 col 4 action left to row 0 col 3. Obstacle minus proposed offsets: dr 1 dc 1; dr 4 dc -2.\n<extra_id_0> step 2 from row 0 col 3 action down to row 1 col 3. Obstacle minus proposed offsets: dr 0 dc 1; dr 3 dc -2.\n<extra_id_0> step 3 from row 1 col 3 action down to row 2 col 3. Obstacle minus proposed offsets: dr -1 dc 1; dr 2 dc -2.\n<extra_id_1> END at row 2 col 3; goal row 2 col 3; goal minus end dr 0 dc 0.",
+  "target_text": "valid",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9791343212127686,
+        0.019466599449515343,
+        0.00092119729379192,
+        0.00047791082761250436,
+        0.0,
+        0.0
+      ],
+      [
+        0.9595103859901428,
+        0.03944932296872139,
+        0.0007030502893030643,
+        0.0003373272193130106,
+        0.0,
+        0.0
+      ],
+      [
+        0.9440512657165527,
+        0.05495036765933037,
+        0.0006104434723965824,
+        0.00038802146445959806,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9761291742324829,
+        0.023870835080742836
+      ]
+    ],
+    "input_tokens": 220,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

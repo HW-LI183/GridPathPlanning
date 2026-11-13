@@ -1,0 +1,19 @@
+{
+  "slot": {
+    "branch": "self_prompt",
+    "derived": true,
+    "independent_sample_id": "sample_d0c86eb10b96ee428e6017b9",
+    "record_id": "dev:self_prompt:sample_d0c86eb10b96ee428e6017b9",
+    "source_sample_id": "sample_d0c86eb10b96ee428e6017b9",
+    "task": "REPAIR"
+  },
+  "fingerprint": "43eff6a96b2b0e00a01b8a81902cabf965d4822b7775b986b2b0e0a36e623633",
+  "status": "materialized",
+  "input_text": "REPAIR\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 2 , 0 ). Goal ( 3 , 1 ). Obstacles ( 2 , 5 ) ; ( 3 , 2 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: down right right left\nFeedback: invalid | step=3 | reason=obstacle_collision\nIf valid, copy candidate. Otherwise return the complete corrected path, actions only.",
+  "target_text": "down right",
+  "prediction": {
+    "text": "up up up up up up left",
+    "generated_tokens": 8,
+    "failure": null
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_e25c03ddf04f4e3e3f823561",
+    "record_id": "dev:V:sample_e25c03ddf04f4e3e3f823561",
+    "source_sample_id": "sample_e25c03ddf04f4e3e3f823561",
+    "task": "VERIFY"
+  },
+  "fingerprint": "83f6e9b0fe3932e51f6fb22db5f10311a872c9989bd7760dc1a5e73c13982016",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 4 col 5. Goal row 5 col 0. Obstacles: row 3 col 2.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 4 col 5 action down to row 5 col 5. Obstacle minus proposed offsets: dr -2 dc -3.\n<extra_id_0> step 2 from row 5 col 5 action down to row 6 col 5. Obstacle minus proposed offsets: dr -3 dc -3.\n<extra_id_0> step 3 from row 6 col 5 action up to row 5 col 5. Obstacle minus proposed offsets: dr -2 dc -3.\n<extra_id_0> step 4 from row 5 col 5 action left to row 5 col 4. Obstacle minus proposed offsets: dr -2 dc -2.\n<extra_id_0> step 5 from row 5 col 4 action left to row 5 col 3. Obstacle minus proposed offsets: dr -2 dc -1.\n<extra_id_0> step 6 from row 5 col 3 action left to row 5 col 2. Obstacle minus proposed offsets: dr -2 dc 0.\n<extra_id_0> step 7 from row 5 col 2 action left to row 5 col 1. Obstacle minus proposed offsets: dr -2 dc 1.\n<extra_id_0> step 8 from row 5 col 1 action left to row 5 col 0. Obstacle minus proposed offsets: dr -2 dc 2.\n<extra_id_1> END at row 5 col 0; goal row 5 col 0; goal minus end dr 0 dc 0.",
+  "target_text": "invalid | step=2 | reason=out_of_bounds",
+  "prediction": {
+    "text": "invalid | step=2 | reason=out_of_bounds",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "out_of_bounds",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.948036253452301,
+        0.025562118738889694,
+        0.025662166997790337,
+        0.0007394436979666352,
+        0.0,
+        0.0
+      ],
+      [
+        0.0018178406171500683,
+        0.001460675965063274,
+        0.9945961833000183,
+        0.0021252708975225687,
+        0.0,
+        0.0
+      ],
+      [
+        0.6632876992225647,
+        0.05055136978626251,
+        0.2808536887168884,
+        0.005307303275913,
+        0.0,
+        0.0
+      ],
+      [
+        0.9525799751281738,
+        0.04632754251360893,
+        0.0006556842708960176,
+        0.0004367798683233559,
+        0.0,
+        0.0
+      ],
+      [
+        0.9664084315299988,
+        0.032176706939935684,
+        0.000789947749581188,
+        0.0006249001016840339,
+        0.0,
+        0.0
+      ],
+      [
+        0.9562679529190063,
+        0.0425107479095459,
+        0.0007006744854152203,
+        0.0005206970381550491,
+        0.0,
+        0.0
+      ],
+      [
+        0.9542526602745056,
+        0.04325783997774124,
+        0.0015035115648061037,
+        0.000986026949249208,
+        0.0,
+        0.0
+      ],
+      [
+        0.9484195709228516,
+        0.04967879503965378,
+        0.001076319138519466,
+        0.0008252424886450171,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9867772459983826,
+        0.013222822919487953
+      ]
+    ],
+    "input_tokens": 361,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

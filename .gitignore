@@ -1,31 +1,18 @@
-# 大模型、依赖副本与运行缓存
-.cache/
-__pycache__/
-*.py[cod]
-.pytest_cache/
 models/
-third_party/
+checkpoints/
 logs/
-.env
-.env.*
-*.pem
-*.key
-*.part
+third_party/
+__pycache__/
+.pytest_cache/
+*.py[cod]
 *.pt
 *.pth
 *.bin
 *.safetensors
-# 只保留检查点目录的轻量证据；权重与优化器状态不进 Git。
-checkpoints/**/_states/
-checkpoints/**/latest
-checkpoints/**/best/*
-!checkpoints/**/best/checkpoint.json
-manifests/*.lock
-manifests/conda-*.txt
+.env*
+*.pem
+*.key
 *.selection.json
-# 论文及课程说明不放入发布包；来源见 README。
-Can Large Language Models be Good Path Planners.pdf
-AIAA4051_Project6.md
-
-# 模型推理缓存可由评价重建；保留cases逐例审计结果。
-results/v1/*/*/cache/
+results/**/cache/
+results/**/generate_cache/
+results/**/verify_cache/

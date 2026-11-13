@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_2f3c6f50608f865013dfb3dc",
+    "record_id": "dev:V:sample_2f3c6f50608f865013dfb3dc",
+    "source_sample_id": "sample_2f3c6f50608f865013dfb3dc",
+    "task": "VERIFY"
+  },
+  "fingerprint": "83f6e9b0fe3932e51f6fb22db5f10311a872c9989bd7760dc1a5e73c13982016",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 0. Goal row 3 col 2. Obstacles: row 1 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 0 action up to row 4 col 0. Obstacle minus proposed offsets: dr -3 dc 1.\n<extra_id_0> step 2 from row 4 col 0 action right to row 4 col 1. Obstacle minus proposed offsets: dr -3 dc 0.\n<extra_id_0> step 3 from row 4 col 1 action right to row 4 col 2. Obstacle minus proposed offsets: dr -3 dc -1.\n<extra_id_1> END at row 4 col 2; goal row 3 col 2; goal minus end dr -1 dc 0.",
+  "target_text": "invalid | step=4 | reason=goal_not_reached",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9818100929260254,
+        0.016827115789055824,
+        0.0008025371935218573,
+        0.0005602612509392202,
+        0.0,
+        0.0
+      ],
+      [
+        0.9356423616409302,
+        0.06317576766014099,
+        0.0006644692039117217,
+        0.000517489155754447,
+        0.0,
+        0.0
+      ],
+      [
+        0.9587352275848389,
+        0.03957172855734825,
+        0.0009452933445572853,
+        0.0007477885810658336,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9362850189208984,
+        0.06371499598026276
+      ]
+    ],
+    "input_tokens": 183,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

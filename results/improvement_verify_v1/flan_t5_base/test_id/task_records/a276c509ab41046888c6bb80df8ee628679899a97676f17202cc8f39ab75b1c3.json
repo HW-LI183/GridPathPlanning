@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_13f1d3e73ab29261cc60fac2",
+    "record_id": "test_id:V:sample_13f1d3e73ab29261cc60fac2",
+    "source_sample_id": "sample_13f1d3e73ab29261cc60fac2",
+    "task": "VERIFY"
+  },
+  "fingerprint": "b526ddfd94412468add3bb8989b6efaaf7e12b626b9c3f118f0bf144d6a440ee",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 3 col 3. Goal row 5 col 2. Obstacles: row 0 col 4; row 1 col 1; row 1 col 2; row 3 col 2; row 3 col 4.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 3 col 3 action down to row 4 col 3. Obstacle minus proposed offsets: dr -4 dc 1; dr -3 dc -2; dr -3 dc -1; dr -1 dc -1; dr -1 dc 1.\n<extra_id_0> step 2 from row 4 col 3 action right to row 4 col 4. Obstacle minus proposed offsets: dr -4 dc 0; dr -3 dc -3; dr -3 dc -2; dr -1 dc -2; dr -1 dc 0.\n<extra_id_0> step 3 from row 4 col 4 action left to row 4 col 3. Obstacle minus proposed offsets: dr -4 dc 1; dr -3 dc -2; dr -3 dc -1; dr -1 dc -1; dr -1 dc 1.\n<extra_id_1> END at row 4 col 3; goal row 5 col 2; goal minus end dr 1 dc -1.",
+  "target_text": "invalid | step=4 | reason=goal_not_reached",
+  "prediction": {
+    "text": "invalid | step=4 | reason=goal_not_reached",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      5
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "goal_not_reached"
+    ],
+    "probabilities": [
+      [
+        0.9994112253189087,
+        0.0003799051628448069,
+        0.0001292562228627503,
+        7.963243842823431e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.999251663684845,
+        0.0005883146659471095,
+        9.603973012417555e-05,
+        6.397625111276284e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.9985857009887695,
+        0.0012446321779862046,
+        0.00010058168845716864,
+        6.912872049724683e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0002868540759664029,
+        0.999713122844696
+      ]
+    ],
+    "input_tokens": 331,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

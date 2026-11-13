@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_a913666b08dbfd0874c2e62d",
+    "record_id": "test_ood:V:sample_a913666b08dbfd0874c2e62d",
+    "source_sample_id": "sample_a913666b08dbfd0874c2e62d",
+    "task": "VERIFY"
+  },
+  "fingerprint": "c6c6d10f9d8e8d31c8d5e0a8c37ebaeb91c06f69f172d592a2622152e3e30806",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 3 col 3. Goal row 1 col 4. Obstacles: row 0 col 3.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 3 col 3 action up to row 2 col 3. Obstacle minus proposed offsets: dr -2 dc 0.\n<extra_id_0> step 2 from row 2 col 3 action up to row 1 col 3. Obstacle minus proposed offsets: dr -1 dc 0.\n<extra_id_0> step 3 from row 1 col 3 action right to row 1 col 4. Obstacle minus proposed offsets: dr -1 dc -1.\n<extra_id_1> END at row 1 col 4; goal row 1 col 4; goal minus end dr 0 dc 0.",
+  "target_text": "valid",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9992507100105286,
+        0.0005356661276891828,
+        7.597361400257796e-05,
+        0.00013757043052464724,
+        0.0,
+        0.0
+      ],
+      [
+        0.9983047246932983,
+        0.001409956137649715,
+        9.446117473999038e-05,
+        0.00019081680511590093,
+        0.0,
+        0.0
+      ],
+      [
+        0.9976140260696411,
+        0.0018376570660620928,
+        0.00020298290473874658,
+        0.0003452855162322521,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9990302324295044,
+        0.0009697519126348197
+      ]
+    ],
+    "input_tokens": 178,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

@@ -55,44 +55,7 @@ BFS只在CPU构造/离线评分中使用，不参与阶段四的神经生成或�
 
 ## 4. 执行命令
 
-本节是阶段三的完整运行顺序，不只针对一次配额调整。当前数据已构造并审计，无需为阅读文档重跑；以下命令用于首次准备或检查同一冻结输入。
-
-### 4.1 第一步：确认阶段一、二与数据来源
-
-先完成[阶段一](./phase1.md)的conda环境、四个基线模型的固定版本资源及上游PPNL准备，以及[阶段二](./phase2.md)的执行器检查。配置为`configs/data.yaml`，来源为`data/v1_sources.json`；后者含4000个训练环境、固定G100及冻结测试环境/编辑索引，不是模型预测结果。
-
-```bash
-cd /home/user/cjx/GridPathPlanning
-mkdir -p logs/phase3
-```
-
-### 4.2 第二步：构造正式数据
-
-```bash
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/build_data.py \
-  > logs/phase3/build.log 2>&1
-```
-
-输出`data/v1/`下train、dev、test_id、test_ood、test_environments五个文件，并写入`manifests/dataset_manifest.json`。此时只是构造完成，尚不能代替独立审计。
-
-### 4.3 第三步：独立审计并验收
-
-```bash
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/audit_data.py \
-  > logs/phase3/audit.log 2>&1
-```
-
-必须在`results/data_audit.json`确认`status=passed`且`errors=[]`，并检查正式配额：4000G训练，开发G100/R100，R100四类各25且全部无效，ID/OOD各200。审计还复核参考最短路、单/双编辑、布局隔离、官方执行器及两模型token长度。
-
-结果写入`results/data_audit.json`与`manifests/phase3_checks.json`，审计失败则不进入训练。
-
-### 4.4 第四步：冻结并交接阶段四
-
-记录来源、数据和审计哈希；正式训练开始后保持输入冻结。随后转到[phase4.md第4节](./phase4.md#4-执行命令)：CPU预检→四个模型pilot/训练及每遍G100评价→G100选主模型→完整G100/R100推理→汇总复核→冻结后最终测试。
-
-两个构造/审计入口均设置60秒上限，不使用GPU、不下载。相同来源重复构造会校验相同内容；已有不同数据则拒绝隐式覆盖。活动训练期间不修改数据或反复重写冻结来源、清单和审计输出。当前修复配额兼容记录只用于已经完成的模型，不是首次训练的前置数据。
+先创建独立复现目录；环境、数据、训练与评价的完整顺序见[复现说明](reproduce.md)。公开结果只读保留，不在此目录继续训练或覆盖汇总。
 
 ## 5. 验证结果
 
@@ -112,7 +75,7 @@ mkdir -p logs/phase3
 
 ## 6. 资源使用记录
 
-本阶段只使用CPU构造和审计，无GPU训练或正式推理、无下载。构造和审计秒数分别保存在清单与审计JSON。训练资源属于阶段四，账本不会因删除旧实验文件归零。
+实验参考GPU为RTX A6000；样本暴露、训练更新与成本摘要见`results/training_summary.json`。公开副本不提供设备名称、系统路径、环境转储、空闲磁盘或连接配置。读者独立运行应记录自己的实际成本。
 
 ## 7. 问题与后续处理
 

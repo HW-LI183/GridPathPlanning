@@ -4,12 +4,13 @@ import json
 from pathlib import Path
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
+from .baselines.layout import WorkspacePath,resolve_artifact,original_source_sha
+ROOT = WorkspacePath(Path(__file__).resolve().parents[2])
 
 
 def sha256(path):
     h = hashlib.sha256()
-    with Path(path).open("rb") as stream:
+    with resolve_artifact(path).open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
@@ -20,12 +21,12 @@ def digest(value):
 
 
 def read_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    return json.loads(resolve_artifact(path).read_text(encoding="utf-8"))
 
 
 def write_json(path, value):
     import os
-    path = Path(path)
+    path = resolve_artifact(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_name(path.name + ".tmp")
     with temp.open("w", encoding="utf-8") as f:
@@ -37,7 +38,7 @@ def write_json(path, value):
 
 
 def read_rows(path):
-    return [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
+    return [json.loads(line) for line in resolve_artifact(path).read_text().splitlines() if line.strip()]
 
 
 def model_keys():
@@ -108,7 +109,7 @@ def binding_for(model, verify_weights=True):
                "src/gridpath/training_config.py", "scripts/phase4.py", "scripts/run_phase4_v1.sh"]
     payload = {"config":cfg, "dataset":sha256(ROOT / "manifests/dataset_manifest.json"),
                "audit":sha256(ROOT / "results/data_audit.json"), "model":card,
-               "sources":{p:sha256(ROOT / p) for p in sources},
+               "sources":{p:original_source_sha(ROOT / p) for p in sources},
                "packages":{p:importlib.metadata.version(p) for p in ("torch", "transformers", "numpy")}}
     lineage_path=ROOT/"manifests/v1_training_lineage.json"
     if lineage_path.exists() and model in read_json(lineage_path)["models"]:

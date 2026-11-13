@@ -1,0 +1,23 @@
+version: gridpath.full_run.1
+seed: 42
+train_generate: 3000
+train_verify: 1000
+split_panels: {generate: 60, verify: 80, repair: 60}
+max_total_epochs: 3
+effective_batch_size: 4
+micro_batch_size: 4
+precision: bf16
+learning_rate: 0.0001
+head_learning_rate: 0.001
+weight_decay: 0.01
+warmup_updates: 12
+max_grad_norm: 1.0
+pilot_updates: 10
+checkpoint_every_updates: 25
+max_source_tokens: 512
+verify_source_tokens: 2048
+max_plan_actions: 72
+session_wall_seconds: 3600
+gpu_hours_cap: 20
+checkpoint_policy: fixed_final_epoch_latest
+test_seed: 4202026

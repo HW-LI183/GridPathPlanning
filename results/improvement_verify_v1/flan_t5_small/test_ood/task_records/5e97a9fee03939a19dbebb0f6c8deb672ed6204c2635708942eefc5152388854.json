@@ -1,0 +1,128 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_98a033ab34c71e2468ca72b2",
+    "record_id": "test_ood:V:sample_98a033ab34c71e2468ca72b2",
+    "source_sample_id": "sample_98a033ab34c71e2468ca72b2",
+    "task": "VERIFY"
+  },
+  "fingerprint": "0cc067f8f4bebd3580d20120b12f21f6b9d2234d22e25067d7fac646fc91431d",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 1 col 0. Goal row 5 col 3. Obstacles: row 0 col 5; row 3 col 2; row 5 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 1 col 0 action jump to row 1 col 0. Obstacle minus proposed offsets: dr -1 dc 5; dr 2 dc 2; dr 4 dc 1.\n<extra_id_0> step 2 from row 1 col 0 action down to row 2 col 0. Obstacle minus proposed offsets: dr -2 dc 5; dr 1 dc 2; dr 3 dc 1.\n<extra_id_0> step 3 from row 2 col 0 action down to row 3 col 0. Obstacle minus proposed offsets: dr -3 dc 5; dr 0 dc 2; dr 2 dc 1.\n<extra_id_0> step 4 from row 3 col 0 action right to row 3 col 1. Obstacle minus proposed offsets: dr -3 dc 4; dr 0 dc 1; dr 2 dc 0.\n<extra_id_0> step 5 from row 3 col 1 action down to row 4 col 1. Obstacle minus proposed offsets: dr -4 dc 4; dr -1 dc 1; dr 1 dc 0.\n<extra_id_0> step 6 from row 4 col 1 action up to row 3 col 1. Obstacle minus proposed offsets: dr -3 dc 4; dr 0 dc 1; dr 2 dc 0.\n<extra_id_0> step 7 from row 3 col 1 action right to row 3 col 2. Obstacle minus proposed offsets: dr -3 dc 3; dr 0 dc 0; dr 2 dc -1.\n<extra_id_0> step 8 from row 3 col 2 action down to row 4 col 2. Obstacle minus proposed offsets: dr -4 dc 3; dr -1 dc 0; dr 1 dc -1.\n<extra_id_0> step 9 from row 4 col 2 action right to row 4 col 3. Obstacle minus proposed offsets: dr -4 dc 2; dr -1 dc -1; dr 1 dc -2.\n<extra_id_1> END at row 4 col 3; goal row 5 col 3; goal minus end dr 1 dc 0.",
+  "target_text": "invalid | step=1 | reason=invalid_action_token",
+  "prediction": {
+    "text": "invalid | step=1 | reason=invalid_action_token",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "invalid_action_token",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.0006148261018097401,
+        0.0006493858527392149,
+        0.002275450387969613,
+        0.9964602589607239,
+        0.0,
+        0.0
+      ],
+      [
+        0.8600424528121948,
+        0.1382213979959488,
+        0.0009760238463059068,
+        0.0007601281395182014,
+        0.0,
+        0.0
+      ],
+      [
+        0.8716813325881958,
+        0.12557761371135712,
+        0.001004810445010662,
+        0.0017361568752676249,
+        0.0,
+        0.0
+      ],
+      [
+        0.8281431198120117,
+        0.1695670783519745,
+        0.000984925776720047,
+        0.0013048145920038223,
+        0.0,
+        0.0
+      ],
+      [
+        0.8463840484619141,
+        0.15174831449985504,
+        0.00100662000477314,
+        0.0008610077202320099,
+        0.0,
+        0.0
+      ],
+      [
+        0.8749220967292786,
+        0.12312465161085129,
+        0.0011428325669839978,
+        0.0008103896398097277,
+        0.0,
+        0.0
+      ],
+      [
+        0.8931601047515869,
+        0.10501895099878311,
+        0.0011132302461192012,
+        0.0007076121401041746,
+        0.0,
+        0.0
+      ],
+      [
+        0.9351984858512878,
+        0.06364105641841888,
+        0.0007181217661127448,
+        0.00044242196599952877,
+        0.0,
+        0.0
+      ],
+      [
+        0.9161763787269592,
+        0.08259580284357071,
+        0.0006712987087666988,
+        0.0005565261235460639,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9865716695785522,
+        0.01342825498431921
+      ]
+    ],
+    "input_tokens": 575,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

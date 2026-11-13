@@ -1,56 +1,50 @@
-# GridPathPlanning：网格路径规划基线
+# GridPathPlanning：生成、验证与反馈修复
 
-## 1. 项目目标与范围
+## 1. 项目目标
 
-AIAA4051 Project 6 的单目标网格路径规划实现，参考 [PPNL 论文](https://arxiv.org/abs/2310.03249)及其[上游代码](https://github.com/MohamedAghzal/llms-as-path-planners)。当前完成阶段一至四 v1：数据构造与审计、严格执行器、T5系列的生成微调及单次反馈修复；四模型均已完成训练和开发评价。阶段五主体改进和最终测试尚未开展。项目目录分工见[目录说明](docs/project_structure.md)。
+在6×6单目标网格中，研究小型语言模型的路径生成、有效性验证、首次错误诊断与反馈修复。基线比较T5-base、T5-small、Flan-T5-base、Flan-T5-small；Part 2主线使用开发集选出的T5-base，其他模型的改进作为补充实验。
 
-当前验证器是确定性执行器，不是模型自验证；当前结果不能代替课程要求中的自验证对比。详细计划见 [plan.md](plan.md)。
+## 2. 三套实验的关系
 
-## 2. 配置与方法
+| 实验 | 训练 | 验证 | 修复 | 已公开成绩 |
+| --- | --- | --- | --- | --- |
+| v1 | 4000生成记录 | 执行器 | 同一G提示修复／前缀续写 | 四模型开发G100/R100；未宣称已完成v1正式测试 |
+| v2 | G3000＋V1000，独立G与朴素文本V | 模型V／执行器对照 | 两种反馈×提示／前缀四组合 | 四模型dev、单错、双错，各200实例 |
+| improvement_verify_v1 | 在v2基础上复用其G，替换为结构化逐步V | 神经模型逐步预测，无执行器代答 | 与v2相同四组合 | T5-base主线及四模型补充，三个分区完整 |
 
-- 模型：原始 `google-t5/t5-base`、`google-t5/t5-small` 以及 `google/flan-t5-base`、`google/flan-t5-small`，共四个基线；固定版本分别见[原T5清单](manifests/models.json)与[Flan清单](manifests/flan_models.json)。
-- 数据：6×6 可达网格、1–5 个障碍；4000 条训练样本全部用于生成。开发集分为 G100 与 R100，R100 全为受控无效候选。按障碍布局隔离数据划分，详情见 [阶段三](docs/phase3.md)。
-- 训练：单卡 RTX A6000，BF16、全参数 AdamW、学习率 `1e-4`、有效 batch 4、seed 42；三遍共 3000 次更新，pilot 计入预算。每遍在 G100 选模，R100 不参与训练或选模。
-- 验证：严格执行完整动作序列，返回有效性、首次错误位置及类型；BFS 只用于离线数据和评分，不替模型规划。
-- 提示修复：原网格、候选及执行器反馈输入同一个生成模型，输出完整新路径。
-- 前缀续写：保留已执行的合法前缀，以其终点作为新起点，使用生成任务模板预测后缀。前缀已到目标时直接结束，单独统计确定性截断贡献。
+**改进的直接对照是v2，而非v1。** 改进与v2使用相同数据、G权重、候选和评分；只改变V方案。v1与v2的数据预算分配和面板不同，不是单因素消融。聚焦消融尚未完成。
 
-## 3. 当前结果与解释
+## 3. 主要结果
 
-以下全部为**开发集**结果。四模型均选择第3遍检查点，主模型为**T5-base**，最终测试未运行。
+T5-base单错测试：
 
-| 指标 | T5-base | T5-small | Flan-T5-base | Flan-T5-small |
-| --- | ---: | ---: | ---: | ---: |
-| G100直接生成成功率 | 60% | 23% | 56% | 27% |
-| G100提示修复后成功率 | 64% | 24% | 56% | 33% |
-| G100前缀续写后成功率 | 67% | 40% | 60% | 42% |
-| R100提示修复率 | 58% | 8% | 54% | 29% |
-| R100前缀续写修复率 | 65% | 19% | 53% | 31% |
+| 指标 | v2 | 验证改进 |
+| --- | ---: | ---: |
+| 固定V80 Macro-F1 | 0.5827 | 0.9499 |
+| 固定V80首错定位 | 12.50% | 80.00% |
+| R60模型提示修复率 | 18.33% | 58.33% |
+| G60模型前缀最终成功率 | 78.33% | 80.00% |
 
-Flan-small优于T5-small，但Flan-base没有超过T5-base，指令微调背景未带来一致优势。每面板100条、单种子，不能据此断言家族层面的普遍优势。
+验证和受控修复明显改善，自然生成碰撞的诊断及反馈利用仍较弱。结果文件包含分母、失败类型、逐例轨迹及空后缀／神经后缀贡献；不能只凭单项分数评价整体规划能力。
 
-前缀收益包括确定性截断：G100的“截断＋实际后缀生成”成功数依次为T5-base `2＋5`、T5-small `14＋3`、Flan-base `2＋2`、Flan-small `7＋8`；R100为`8＋57`、`8＋11`、`8＋45`、`8＋23`。成功率与最优性需同时报告，尤其Flan-small前缀成功42%而最优成功35%。完整训练曲线、首错分组、配对比较与资源分析见[阶段四](docs/phase4.md)，机器结果见[汇总](results/v1/summary_dev.json)、[CSV](results/v1/metrics_dev.csv)与[800例复核](results/v1/review_dev.json)。
+## 4. 文档与结果入口
 
-## 4. 目录与发布内容
+- [phase1：环境、模型与上游版本准备](docs/phase1.md)、[phase2：执行器、BFS与评分](docs/phase2.md)。
 
-| 路径 | 内容 |
-| --- | --- |
-| `src/gridpath/`、`scripts/`、`tests/` | 实现、运行入口及测试 |
-| `configs/`、`manifests/` | 配置、固定版本、数据哈希、历史资源与训练来源记录 |
-| `data/` | 冻结来源及 v1 数据；测试数据保留，但未用于调参 |
-| `results/v1/` | 开发集汇总、800 条模型×样本记录及图表 |
-| `checkpoints/v1/` | 轻量训练记录、逐遍评估和 best 元数据；不含权重 |
-| `docs/phase1.md` 至 `docs/phase4.md` | 各阶段完整方法、顺序、命令与验收 |
+- [v1数据](docs/phase3.md)、[v1执行器基线](docs/phase4.md)。
+- [v2数据](docs/phase3_v2.md)、[v2模型验证基线](docs/phase4_v2.md)。
+- [Part 2：T5-base主线](docs/improvement_verify_t5base_v1.md)、[四模型补充](docs/improvement_verify_all_v1.md)。
+- `results/v1/`、`results/v2/`、`results/improvement_verify_v1/`：CSV、JSON、逐例预测与审查证据。
+- `results/comparisons/`：v2与改进的配对结果；`results/training_summary.json`：轻量训练及成本摘要。
 
-GitHub 发布包不包含预训练模型、微调权重、优化器状态、Conda 环境、上游仓库副本、安装日志、缓存、论文 PDF 和课程说明原文。工作站原始文件不删除。上传选择由 `scripts/package_repository.py` 的白名单固定，操作见 [GitHub 上传说明](docs/github_upload.md)。
+公开副本不包含作者的本机路径、环境转储、归档目录、连接配置、权重、检查点、优化器、日志或模型推理缓存。保存的原始预测和指标保持原值；发布副本的通用运行入口与原实验的源码指纹可能不同，变化见`manifests/public_release.json`，不将公开副本伪装为原训练运行。
 
-## 5. 环境与权重获取
+## 5. 环境与权重
 
-已有工作站使用 `/home/user/miniconda3/bin/conda` 的 `gridpath` 环境，无需重复安装。新机器在工作站自身网络执行以下命令；更换 Conda 安装位置时替换路径。PyTorch CUDA wheel 与项目其他 Python 包分别安装，不通过 GitHub 隧道下载。
+Python3.10、PyTorch2.5.1+CUDA12.1、Transformers4.40.1；实验参考GPU为RTX A6000。Conda安装位置由使用者决定，通过PATH中的`conda`或环境变量`GRIDPATH_CONDA`选择。
 
 ```bash
-/home/user/miniconda3/bin/conda create -n gridpath python=3.10 pip -y
-source /home/user/miniconda3/etc/profile.d/conda.sh
+conda create -n gridpath python=3.10 pip -y
 conda activate gridpath
 python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 python -m pip install -r requirements.txt safetensors==0.8.0 \
@@ -58,72 +52,32 @@ python -m pip install -r requirements.txt safetensors==0.8.0 \
 python -m pip install --no-deps --no-build-isolation -e .
 ```
 
-完整原环境包记录见 `requirements-lock.txt`，其中包含来源环境附带依赖；实际复现依赖以上述项目依赖为准。GPU 需支持当前 BF16 配置及兼容 CUDA 驱动。
+四个原始检查点的仓库、固定revision和文件SHA256在`manifests/models.json`、`flan_models.json`。在独立复现目录运行`bash scripts/run_phase4_v1.sh prepare all`下载并校验。使用下载设备自己的网络与HF镜像，不需要GitHub代理。微调权重未在Git发布、没有公共下载地址；需要重新训练，不能把预训练权重当作已微调权重。
 
-**预训练权重**：四个模型均使用`bash scripts/run_phase4_v1.sh prepare <模型键>`，从工作站网络访问HF镜像，固定revision并校验文件；`prepare all`准备全部模型。T5-small/base权重合计约1.134 GB，Flan-T5-small/base合计约1.298 GB；已有完整文件只做校验，不重复下载。模型版本分别见两份清单。下节给出完整顺序。
+## 6. 查阅与离线复核
 
-**微调权重**：尚未发布公开下载地址，不能仅下载原始 T5 就复现表中成绩。可按下节重新训练；本工作站已完成权重位于 `checkpoints/v1/t5_base/best/` 和 `checkpoints/v1/t5_small/best/`，Flan对应`flan_t5_base/best/`、`flan_t5_small/best/`。如需直接分享，应另行发布各模型best目录内的推理文件与 `checkpoint.json`，不包含 `training_state.pt`；不要将它们提交普通 Git。本仓库的模型清单与 best 元数据可用于核对版本和哈希。
-
-## 6. 从头复现的逐步命令
-
-发布目录保留历史完成标记与实验绑定，用于核对证据。**先创建新的独立目录再训练**，避免旧选模锁、训练 lineage 或已有结果与新运行冲突；不要删除原工作站记录。
+安装环境后可直接检查CSV／JSON，或只用已发布预测在CPU重算三个实验的指标：
 
 ```bash
-# 在下载的本项目根目录运行；目标必须尚不存在。
-python scripts/create_reproduction.py --output ../GridPathPlanning-repro
-cd ../GridPathPlanning-repro
-source /home/user/miniconda3/etc/profile.d/conda.sh
-conda activate gridpath
-
-# 上游源码通过工作站镜像下载；不下载其整套数据。
-env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u http_proxy -u https_proxy -u all_proxy \
-  git clone https://ghfast.top/https://github.com/MohamedAghzal/llms-as-path-planners.git \
-  third_party/ppnl_upstream
-git -C third_party/ppnl_upstream checkout --detach 5fd0376fc50ae9860bc986085165ebac5675fd44
-
-# 四个模型统一准备：固定revision、断点续传、哈希校验；工作站镜像下载。
-bash scripts/run_phase4_v1.sh prepare all
-export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
-
-# 阶段二、三：CPU检查、数据构造、完整审计。
-python scripts/build_data.py
-python scripts/audit_data.py
+python scripts/review_public_results.py
 python -m pytest -q
-
-# 阶段四：以下是正式训练/批量推理，由使用者手动启动。
-bash scripts/run_phase4_v1.sh preflight all
-bash scripts/run_phase4_v1.sh train all
-bash scripts/run_phase4_v1.sh select
-bash scripts/run_phase4_v1.sh evaluate all
-python scripts/review_v1.py
 ```
 
-若在原工作站复用已有预训练资源，创建目录时加 `--reuse-assets`；这只链接 `models/` 与 `third_party/`，确认所有四份预训练权重都已完整获取后，可跳过克隆及下载，不复用微调检查点。若环境此前以 editable 方式安装到别的目录，切换后重新执行 `python -m pip install --no-deps --no-build-isolation -e .`。
+公开测试集是面向公开副本的CPU单元测试；不包含依赖作者环境／旧检查点的维护测试。指标重算不加载权重、不调用模型、不改写发布结果；它验证保存预测的评分一致性，不等同于重新生成预测或验证旧权重身份。
 
-四个模型的键为`t5_base`、`t5_small`、`flan_t5_base`、`flan_t5_small`。将上面`all`换为任意模型键，即可单独准备、预检、训练或评价该模型。例如：
+## 7. 完整复现
+
+为避免覆盖已发布结果，先创建独立运行目录：
 
 ```bash
-bash scripts/run_phase4_v1.sh prepare t5_base
-bash scripts/run_phase4_v1.sh train t5_base
-bash scripts/run_phase4_v1.sh evaluate t5_base
+python scripts/create_public_reproduction.py --output ../GridPathPlanning-run
+cd ../GridPathPlanning-run
 ```
 
-每个模型都是pilot前10更新接续三遍、每遍自动G100选best，正式评价覆盖G100/R100。已完成的模型会校验状态后跳过，不重新训练。四模型均完成后才形成全体选模结果。图表生成使用系统中文字体`/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc`。详细命令见[阶段四第4节](docs/phase4.md#4-执行命令)。
+后续数据检查、原始资源、训练、开发、测试及对照顺序见[复现说明](docs/reproduce.md)。本仓库未随附训练状态或旧选模锁；新运行产生自己的数据源码清单、模型指纹、日志和成本。公开数据保留原文件及样本ID，训练数据与开发／测试不得混用。
 
-只有方案与选模规则最终冻结后才执行下面的最终 ID/OOD 测试；当前仓库未报告其结果：
+## 8. 范围与局限
 
-```bash
-bash scripts/run_phase4_v1.sh test
-```
+seed42，各适用子集最多三遍、20 GPU-hours预算；单seed、小面板、受控／自然错误分布差异均需披露。v2单错与双错共用G问题，不算两批独立生成证据。测试已经公开，后续调参与新增探索应使用独立开发设计，不把已有测试重新当作未查看的测试。
 
-## 7. 复现边界与资源记录
-
-当前开发样本数量较小，差异不自动表示统计显著。前缀续写包含确定性截断，必须分别报告其贡献。提示修复没有专门修复监督，其成功不证明模型学会读取执行器反馈，需要后续消融。
-
-GPU总预算仍为20 GPU-hours，累计使用1.86964、剩余18.13036 GPU-hours；历史消耗见 `manifests/gpu_budget.json`；它包含已发生的探索成本。独立复现目录不复制该运行账本，会记录自身新实验成本，不改变原工作站历史。不同 GPU、驱动或包版本可能产生数值差异，不能保证逐 token 一致。当前尚无最终测试结论或阶段五改进结论。
-
-## 8. 文档入口与后续工作
-
-按 [阶段一](docs/phase1.md) → [阶段二](docs/phase2.md) → [阶段三](docs/phase3.md) → [阶段四](docs/phase4.md) 阅读；[项目计划](plan.md)说明剩余实验，[上传说明](docs/github_upload.md)说明筛选、建仓库及低流量推送。
-
-项目尚未指定开源许可证；论文与上游实现的权利声明以各自原始来源为准。当前发布不自动为这些第三方内容授予新许可。
+保留论文与上游来源标识，不转发课程说明、论文PDF或第三方代码副本。项目未指定开源许可证，本发布过程不自行添加授权声明。

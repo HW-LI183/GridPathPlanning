@@ -18,7 +18,7 @@
 
 | 项目 | 本阶段采用值 |
 | --- | --- |
-| Conda | `/home/user/miniconda3/bin/conda` |
+| Conda | `conda` |
 | 环境 | `gridpath`；Python 3.10.22 |
 | 正式实验硬件 | NVIDIA RTX A6000；本阶段只使用 CPU |
 | 后续基线 | 原始 `google-t5/t5-small` 与 `google-t5/t5-base` |
@@ -167,42 +167,7 @@ aggregate_repair_metrics(original_results, final_results)
 
 ## 4. 执行命令
 
-以下检查**已经执行通过**，需要时可用同一 Conda 环境复查，均为短 CPU 任务：
-
-```bash
-cd /home/user/cjx/GridPathPlanning
-mkdir -p logs/phase2
-
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python -m pytest -q --junitxml=logs/phase2/pytest.xml \
-  > logs/phase2/pytest.log 2>&1
-
-/home/user/miniconda3/bin/conda run --no-capture-output --name gridpath \
-  python scripts/check_phase2.py \
-  > logs/phase2/check.log 2>&1
-```
-
-pytest 通过 [pyproject.toml](../pyproject.toml) 的 `pythonpath` 设置找到 `src/`；检查脚本自行设置项目源路径，无须重新安装依赖或访问网络。
-
-`check_phase2.py` 默认使用种子 42、512 条短随机候选，并验证对应 BFS 路径。`--random-cases` 只接受 0–4096，防止把短检查误作全量数据构造。输出默认为 `manifests/phase2_checks.json`；`--output` 可另指定保存位置。
-
-在交互式 Python 中调用接口时，可先在项目根目录设置 `PYTHONPATH=src`。接口使用示例：
-
-```python
-from gridpath import Grid, execute
-from gridpath.bfs import shortest_path
-
-grid = Grid.from_world([[2, 3, 0], [0, 1, 0], [0, 0, 0]])
-result = execute(grid, "down right jump")
-print(result.verification_label)
-# invalid | step=2 | reason=obstacle_collision
-
-reference = shortest_path(grid)  # 仅离线构造/评估使用
-print(reference.distance, reference.actions)
-# 1 ('right',)
-```
-
-本阶段没有待用户启动的长任务。正式数据构造与审计命令在阶段 3 实现后提供，训练和长时评估仍由用户执行。
+先创建独立复现目录；环境、数据、训练与评价的完整顺序见[复现说明](reproduce.md)。公开结果只读保留，不在此目录继续训练或覆盖汇总。
 
 ## 5. 验证结果
 
@@ -222,8 +187,8 @@ print(reference.distance, reference.actions)
 
 证据文件：
 
-- `logs/phase2/pytest.log`（工作站记录，不随发布包上传）、`logs/phase2/pytest.xml`（工作站记录，不随发布包上传）：完整单元检查结果。
-- `logs/phase2/check.log`（工作站记录，不随发布包上传）：差分检查摘要。
+- `logs/phase2/pytest.log`（实验设备记录，不随发布包上传）、`logs/phase2/pytest.xml`（实验设备记录，不随发布包上传）：完整单元检查结果。
+- `logs/phase2/check.log`（实验设备记录，不随发布包上传）：差分检查摘要。
 - [phase2_checks.json](../manifests/phase2_checks.json)：源码哈希、随机种子、官方版本、预期差异、轨迹和评分接口样例。
 - [phase1_recheck.json](../manifests/phase1_recheck.json)：阶段 1 权重和文件复核证据。
 
@@ -231,17 +196,7 @@ print(reference.distance, reference.actions)
 
 ## 6. 资源使用记录
 
-| 资源 | 本阶段情况 |
-| --- | --- |
-| GPU 使用 | **0 GPU-hours**，没有导入 Torch 或初始化 CUDA |
-| 下载 | **0**，全部使用本地源码和文件 |
-| 训练、正式 pilot、批量模型推理 | **0 次** |
-| 正式数据样本新增 | **0 条** |
-| 差分检查 CPU 时间 | 最近一次核心检查约 0.036 秒，精确值保存在检查清单 |
-| 单元检查 CPU 时间 | 最近一次 pytest 报告 0.05 秒；完整日志已保存 |
-| 阶段 1 权重复核 | 仅 CPU 读取并计算已有文件哈希，没有重新下载或加载 GPU 模型 |
-
-Conda 启动、文件读取和人工审阅没有合并成精确 CPU 总耗时，不填写估算冒充实测。项目原有 GPU 预算登记保持不变。
+实验参考GPU为RTX A6000；样本暴露、训练更新与成本摘要见`results/training_summary.json`。公开副本不提供设备名称、系统路径、环境转储、空闲磁盘或连接配置。读者独立运行应记录自己的实际成本。
 
 ## 7. 问题与后续处理
 

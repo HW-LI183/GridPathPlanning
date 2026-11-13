@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_34c3716b96aa5300d9ece1ad",
+    "record_id": "test_id:V:sample_34c3716b96aa5300d9ece1ad",
+    "source_sample_id": "sample_34c3716b96aa5300d9ece1ad",
+    "task": "VERIFY"
+  },
+  "fingerprint": "946dc3ac8d8baa0e14e6132fca4e1c5390864eb4fd55323cfa0399a0f283b885",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 3 col 3. Goal row 4 col 1. Obstacles: row 0 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 3 col 3 action down to row 4 col 3. Obstacle minus proposed offsets: dr -4 dc -2.\n<extra_id_0> step 2 from row 4 col 3 action left to row 4 col 2. Obstacle minus proposed offsets: dr -4 dc -1.\n<extra_id_0> step 3 from row 4 col 2 action left to row 4 col 1. Obstacle minus proposed offsets: dr -4 dc 0.\n<extra_id_1> END at row 4 col 1; goal row 4 col 1; goal minus end dr 0 dc 0.",
+  "target_text": "valid",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9991610050201416,
+        0.0005882612895220518,
+        8.2139675214421e-05,
+        0.00016853968554642051,
+        0.0,
+        0.0
+      ],
+      [
+        0.998687207698822,
+        0.0009322811383754015,
+        0.00010707954061217606,
+        0.0002734371810220182,
+        0.0,
+        0.0
+      ],
+      [
+        0.9982548356056213,
+        0.001466049114242196,
+        0.00010537378693697974,
+        0.000173732012626715,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9986749291419983,
+        0.001325022429227829
+      ]
+    ],
+    "input_tokens": 180,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

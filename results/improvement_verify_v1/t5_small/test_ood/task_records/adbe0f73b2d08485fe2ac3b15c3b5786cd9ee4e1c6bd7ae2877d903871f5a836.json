@@ -1,0 +1,128 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_71ba99d39230763d877c21bd",
+    "record_id": "test_ood:V:sample_71ba99d39230763d877c21bd",
+    "source_sample_id": "sample_71ba99d39230763d877c21bd",
+    "task": "VERIFY"
+  },
+  "fingerprint": "71110a017135d539f2bff736d477ea3e1bce3cd32ceffd96a49285ab218192d5",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 5. Goal row 0 col 3. Obstacles: row 1 col 4; row 4 col 4.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 5 action up to row 4 col 5. Obstacle minus proposed offsets: dr -3 dc -1; dr 0 dc -1.\n<extra_id_0> step 2 from row 4 col 5 action up to row 3 col 5. Obstacle minus proposed offsets: dr -2 dc -1; dr 1 dc -1.\n<extra_id_0> step 3 from row 3 col 5 action up to row 2 col 5. Obstacle minus proposed offsets: dr -1 dc -1; dr 2 dc -1.\n<extra_id_0> step 4 from row 2 col 5 action up to row 1 col 5. Obstacle minus proposed offsets: dr 0 dc -1; dr 3 dc -1.\n<extra_id_0> step 5 from row 1 col 5 action jump to row 1 col 5. Obstacle minus proposed offsets: dr 0 dc -1; dr 3 dc -1.\n<extra_id_0> step 6 from row 1 col 5 action left to row 1 col 4. Obstacle minus proposed offsets: dr 0 dc 0; dr 3 dc 0.\n<extra_id_0> step 7 from row 1 col 4 action left to row 1 col 3. Obstacle minus proposed offsets: dr 0 dc 1; dr 3 dc 1.\n<extra_id_0> step 8 from row 1 col 3 action up to row 0 col 3. Obstacle minus proposed offsets: dr 1 dc 1; dr 4 dc 1.\n<extra_id_0> step 9 from row 0 col 3 action down to row 1 col 3. Obstacle minus proposed offsets: dr 0 dc 1; dr 3 dc 1.\n<extra_id_1> END at row 1 col 3; goal row 0 col 3; goal minus end dr -1 dc 0.",
+  "target_text": "invalid | step=5 | reason=invalid_action_token",
+  "prediction": {
+    "text": "invalid | step=5 | reason=invalid_action_token",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "invalid_action_token",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9736445546150208,
+        0.020889557898044586,
+        0.0014868670841678977,
+        0.003979062661528587,
+        0.0,
+        0.0
+      ],
+      [
+        0.9721128940582275,
+        0.023798750713467598,
+        0.0008458585944026709,
+        0.0032425073441118,
+        0.0,
+        0.0
+      ],
+      [
+        0.9709124565124512,
+        0.024794796481728554,
+        0.0010032415157184005,
+        0.003289502579718828,
+        0.0,
+        0.0
+      ],
+      [
+        0.9708779454231262,
+        0.025064751505851746,
+        0.0008187928469851613,
+        0.0032383883371949196,
+        0.0,
+        0.0
+      ],
+      [
+        0.0001849858381319791,
+        0.00019691641500685364,
+        0.0010983115062117577,
+        0.9985198378562927,
+        0.0,
+        0.0
+      ],
+      [
+        0.9737823605537415,
+        0.022174905985593796,
+        0.0011763751972466707,
+        0.002866416936740279,
+        0.0,
+        0.0
+      ],
+      [
+        0.965225875377655,
+        0.0310574509203434,
+        0.0020464614499360323,
+        0.0016702731372788548,
+        0.0,
+        0.0
+      ],
+      [
+        0.9394381642341614,
+        0.05912518873810768,
+        0.0009408533805981278,
+        0.000495794927701354,
+        0.0,
+        0.0
+      ],
+      [
+        0.9558836221694946,
+        0.042327992618083954,
+        0.001329112215898931,
+        0.00045932887587696314,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9929881691932678,
+        0.007011795416474342
+      ]
+    ],
+    "input_tokens": 479,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

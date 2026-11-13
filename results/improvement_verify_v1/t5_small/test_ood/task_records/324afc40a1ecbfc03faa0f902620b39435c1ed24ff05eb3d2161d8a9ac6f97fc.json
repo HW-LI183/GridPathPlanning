@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_96bcf219a911427bbf091d1b",
+    "record_id": "test_ood:V:sample_96bcf219a911427bbf091d1b",
+    "source_sample_id": "sample_96bcf219a911427bbf091d1b",
+    "task": "VERIFY"
+  },
+  "fingerprint": "71110a017135d539f2bff736d477ea3e1bce3cd32ceffd96a49285ab218192d5",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 3 col 3. Goal row 4 col 1. Obstacles: row 0 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 3 col 3 action down to row 4 col 3. Obstacle minus proposed offsets: dr -4 dc -2.\n<extra_id_0> step 2 from row 4 col 3 action left to row 4 col 2. Obstacle minus proposed offsets: dr -4 dc -1.\n<extra_id_0> step 3 from row 4 col 2 action left to row 4 col 1. Obstacle minus proposed offsets: dr -4 dc 0.\n<extra_id_1> END at row 4 col 1; goal row 4 col 1; goal minus end dr 0 dc 0.",
+  "target_text": "valid",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9744985103607178,
+        0.024064823985099792,
+        0.0006400544662028551,
+        0.0007965606637299061,
+        0.0,
+        0.0
+      ],
+      [
+        0.9684934616088867,
+        0.030292436480522156,
+        0.0006165392114780843,
+        0.0005975703243166208,
+        0.0,
+        0.0
+      ],
+      [
+        0.9771037697792053,
+        0.019954996183514595,
+        0.0015395156806334853,
+        0.0014017450157552958,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9865716695785522,
+        0.01342825498431921
+      ]
+    ],
+    "input_tokens": 180,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

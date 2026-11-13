@@ -1,0 +1,19 @@
+{
+  "sample_id": "sample_3162ed651db7b6e58613a2fc",
+  "row_digest": "bafc4984e12e652ac378e123cd12d6b19197a6c4c6e846c816a78e152c474799",
+  "executor_feedback": "valid",
+  "self_verification": {
+    "prompt": "VERIFY\nGrid 6 by 6. Zero-based ( row , col ). Rows increase down; columns increase right. Start ( 1 , 0 ). Goal ( 2 , 4 ). Obstacles ( 1 , 2 ) ; ( 3 , 2 ) ; ( 3 , 3 ) ; ( 4 , 0 ) ; ( 5 , 3 ).\nActions: up row minus 1; down row plus 1; left col minus 1; right col plus 1. Stay inside the grid; avoid obstacles. Execute all actions; end at the goal.\nCandidate: down right right right right\nJudge the entire candidate. Return valid if it ends at the goal without errors. Otherwise return invalid | step=N | reason=TYPE. Steps are one-based; if actions end before reaching the goal, step is action count plus one. TYPE is obstacle_collision, out_of_bounds, invalid_action_token, or goal_not_reached. Return only the label.",
+    "prediction": {
+      "text": "valid",
+      "generated_tokens": 2,
+      "failure": null
+    },
+    "effective_label": "valid",
+    "detail": {
+      "verifier_kind": "plain_seq2seq",
+      "executor_used": false,
+      "raw_output": "valid"
+    }
+  }
+}

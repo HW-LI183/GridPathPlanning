@@ -1,0 +1,58 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_06669154d32d9e7bc28c0c1a",
+    "record_id": "test_id:V:sample_06669154d32d9e7bc28c0c1a",
+    "source_sample_id": "sample_06669154d32d9e7bc28c0c1a",
+    "task": "VERIFY"
+  },
+  "fingerprint": "7c5f672da3c78f520d52145b6bb475bb78743dbb4378c147c66befadeec0d2fb",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 2 col 0. Goal row 1 col 4. Obstacles: row 2 col 5; row 4 col 0.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 2 col 0 action up to row 1 col 0. Obstacle minus proposed offsets: dr 1 dc 5; dr 3 dc 0.\n<extra_id_0> step 2 from row 1 col 0 action right to row 1 col 1. Obstacle minus proposed offsets: dr 1 dc 4; dr 3 dc -1.\n<extra_id_1> END at row 1 col 1; goal row 1 col 4; goal minus end dr 0 dc 3.",
+  "target_text": "invalid | step=3 | reason=goal_not_reached",
+  "prediction": {
+    "text": "invalid | step=3 | reason=goal_not_reached",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      5
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "goal_not_reached"
+    ],
+    "probabilities": [
+      [
+        0.970476508140564,
+        0.027530301362276077,
+        0.0012479937868192792,
+        0.0007452110876329243,
+        0.0,
+        0.0
+      ],
+      [
+        0.9452866315841675,
+        0.051688652485609055,
+        0.0011419510701671243,
+        0.0018827590392902493,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0009399440023116767,
+        0.9990600943565369
+      ]
+    ],
+    "input_tokens": 167,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

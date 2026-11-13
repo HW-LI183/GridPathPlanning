@@ -1,0 +1,118 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_f4d109f9a6fc60c9bec7d4ab",
+    "record_id": "test_ood:V:sample_f4d109f9a6fc60c9bec7d4ab",
+    "source_sample_id": "sample_f4d109f9a6fc60c9bec7d4ab",
+    "task": "VERIFY"
+  },
+  "fingerprint": "71110a017135d539f2bff736d477ea3e1bce3cd32ceffd96a49285ab218192d5",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 1 col 0. Goal row 3 col 5. Obstacles: row 0 col 1; row 2 col 0; row 2 col 2; row 4 col 4; row 5 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 1 col 0 action right to row 1 col 1. Obstacle minus proposed offsets: dr -1 dc 0; dr 1 dc -1; dr 1 dc 1; dr 3 dc 3; dr 4 dc 0.\n<extra_id_0> step 2 from row 1 col 1 action jump to row 1 col 1. Obstacle minus proposed offsets: dr -1 dc 0; dr 1 dc -1; dr 1 dc 1; dr 3 dc 3; dr 4 dc 0.\n<extra_id_0> step 3 from row 1 col 1 action down to row 2 col 1. Obstacle minus proposed offsets: dr -2 dc 0; dr 0 dc -1; dr 0 dc 1; dr 2 dc 3; dr 3 dc 0.\n<extra_id_0> step 4 from row 2 col 1 action right to row 2 col 2. Obstacle minus proposed offsets: dr -2 dc -1; dr 0 dc -2; dr 0 dc 0; dr 2 dc 2; dr 3 dc -1.\n<extra_id_0> step 5 from row 2 col 2 action right to row 2 col 3. Obstacle minus proposed offsets: dr -2 dc -2; dr 0 dc -3; dr 0 dc -1; dr 2 dc 1; dr 3 dc -2.\n<extra_id_0> step 6 from row 2 col 3 action right to row 2 col 4. Obstacle minus proposed offsets: dr -2 dc -3; dr 0 dc -4; dr 0 dc -2; dr 2 dc 0; dr 3 dc -3.\n<extra_id_0> step 7 from row 2 col 4 action up to row 1 col 4. Obstacle minus proposed offsets: dr -1 dc -3; dr 1 dc -4; dr 1 dc -2; dr 3 dc 0; dr 4 dc -3.\n<extra_id_0> step 8 from row 1 col 4 action right to row 1 col 5. Obstacle minus proposed offsets: dr -1 dc -4; dr 1 dc -5; dr 1 dc -3; dr 3 dc -1; dr 4 dc -4.\n<extra_id_1> END at row 1 col 5; goal row 3 col 5; goal minus end dr 2 dc 0.",
+  "target_text": "invalid | step=2 | reason=invalid_action_token",
+  "prediction": {
+    "text": "invalid | step=2 | reason=invalid_action_token",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "invalid_action_token",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9710412621498108,
+        0.021705979481339455,
+        0.0012487199855968356,
+        0.006004033610224724,
+        0.0,
+        0.0
+      ],
+      [
+        0.00022317036928143352,
+        0.00023206046898849308,
+        0.0008689716341905296,
+        0.9986757636070251,
+        0.0,
+        0.0
+      ],
+      [
+        0.9485423564910889,
+        0.0454159751534462,
+        0.0008253493579104543,
+        0.0052163684740662575,
+        0.0,
+        0.0
+      ],
+      [
+        0.9463640451431274,
+        0.048422813415527344,
+        0.0007615704089403152,
+        0.004451550077646971,
+        0.0,
+        0.0
+      ],
+      [
+        0.9748386144638062,
+        0.021442554891109467,
+        0.001376813743263483,
+        0.002342039020732045,
+        0.0,
+        0.0
+      ],
+      [
+        0.9721060991287231,
+        0.020613566040992737,
+        0.0012697753263637424,
+        0.006010617595165968,
+        0.0,
+        0.0
+      ],
+      [
+        0.9752944707870483,
+        0.019908322021365166,
+        0.0010236394591629505,
+        0.003773684846237302,
+        0.0,
+        0.0
+      ],
+      [
+        0.9723940491676331,
+        0.02014201506972313,
+        0.0012119869934394956,
+        0.006251904182136059,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9890130758285522,
+        0.01098694372922182
+      ]
+    ],
+    "input_tokens": 692,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

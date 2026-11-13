@@ -11,10 +11,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--entry-id", required=True)
     parser.add_argument("--confirm-stopped", action="store_true", required=True)
+    parser.add_argument("--ledger", choices=("manifests/gpu_budget.json", "manifests/gpu_budget_total.json"),
+                        default="manifests/gpu_budget.json", help="v2及验证改进使用gpu_budget_total；默认保留v1接口")
     args = parser.parse_args()
     from gridpath.resources import close_interrupted
     from gridpath.training_config import ROOT
-    result = close_interrupted(ROOT / "manifests/gpu_budget.json", args.entry_id)
+    result = close_interrupted(ROOT / args.ledger, args.entry_id)
     print(f"会话已保守结账：{result['wall_seconds']:.1f} 秒；训练暴露记录保持原样")
 
 

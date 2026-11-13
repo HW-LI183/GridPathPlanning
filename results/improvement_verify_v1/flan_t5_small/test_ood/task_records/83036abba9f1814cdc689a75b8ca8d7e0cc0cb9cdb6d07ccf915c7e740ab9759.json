@@ -1,0 +1,118 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_1e6e95dbe979c90705641a69",
+    "record_id": "test_ood:V:sample_1e6e95dbe979c90705641a69",
+    "source_sample_id": "sample_1e6e95dbe979c90705641a69",
+    "task": "VERIFY"
+  },
+  "fingerprint": "0cc067f8f4bebd3580d20120b12f21f6b9d2234d22e25067d7fac646fc91431d",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 4. Goal row 0 col 5. Obstacles: row 2 col 0; row 3 col 1; row 3 col 5; row 4 col 1; row 5 col 3.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 4 action up to row 4 col 4. Obstacle minus proposed offsets: dr -2 dc -4; dr -1 dc -3; dr -1 dc 1; dr 0 dc -3; dr 1 dc -1.\n<extra_id_0> step 2 from row 4 col 4 action up to row 3 col 4. Obstacle minus proposed offsets: dr -1 dc -4; dr 0 dc -3; dr 0 dc 1; dr 1 dc -3; dr 2 dc -1.\n<extra_id_0> step 3 from row 3 col 4 action up to row 2 col 4. Obstacle minus proposed offsets: dr 0 dc -4; dr 1 dc -3; dr 1 dc 1; dr 2 dc -3; dr 3 dc -1.\n<extra_id_0> step 4 from row 2 col 4 action up to row 1 col 4. Obstacle minus proposed offsets: dr 1 dc -4; dr 2 dc -3; dr 2 dc 1; dr 3 dc -3; dr 4 dc -1.\n<extra_id_0> step 5 from row 1 col 4 action up to row 0 col 4. Obstacle minus proposed offsets: dr 2 dc -4; dr 3 dc -3; dr 3 dc 1; dr 4 dc -3; dr 5 dc -1.\n<extra_id_0> step 6 from row 0 col 4 action up to row -1 col 4. Obstacle minus proposed offsets: dr 3 dc -4; dr 4 dc -3; dr 4 dc 1; dr 5 dc -3; dr 6 dc -1.\n<extra_id_0> step 7 from row -1 col 4 action up to row -2 col 4. Obstacle minus proposed offsets: dr 4 dc -4; dr 5 dc -3; dr 5 dc 1; dr 6 dc -3; dr 7 dc -1.\n<extra_id_0> step 8 from row -2 col 4 action right to row -2 col 5. Obstacle minus proposed offsets: dr 4 dc -5; dr 5 dc -4; dr 5 dc 0; dr 6 dc -4; dr 7 dc -2.\n<extra_id_1> END at row -2 col 5; goal row 0 col 5; goal minus end dr 2 dc 0.",
+  "target_text": "invalid | step=6 | reason=out_of_bounds",
+  "prediction": {
+    "text": "invalid | step=6 | reason=out_of_bounds",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      2,
+      2,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "continue",
+      "out_of_bounds",
+      "out_of_bounds",
+      "out_of_bounds",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.977347731590271,
+        0.021051080897450447,
+        0.0010257945396006107,
+        0.000575418584048748,
+        0.0,
+        0.0
+      ],
+      [
+        0.9511212706565857,
+        0.04735353961586952,
+        0.0011854727054014802,
+        0.000339643593179062,
+        0.0,
+        0.0
+      ],
+      [
+        0.9423000812530518,
+        0.0565895177423954,
+        0.0007465436356142163,
+        0.00036383632686920464,
+        0.0,
+        0.0
+      ],
+      [
+        0.9478724598884583,
+        0.051026493310928345,
+        0.0006731547764502466,
+        0.00042788320570252836,
+        0.0,
+        0.0
+      ],
+      [
+        0.9613156914710999,
+        0.036268845200538635,
+        0.002102869562804699,
+        0.00031256367219612,
+        0.0,
+        0.0
+      ],
+      [
+        0.0014785606181249022,
+        0.0019896207377314568,
+        0.9911654591560364,
+        0.005366261582821608,
+        0.0,
+        0.0
+      ],
+      [
+        0.004541509319096804,
+        0.003536930773407221,
+        0.9883846044540405,
+        0.003536930773407221,
+        0.0,
+        0.0
+      ],
+      [
+        0.03485026955604553,
+        0.011520491912961006,
+        0.9516428709030151,
+        0.0019863818306475878,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9869794845581055,
+        0.013020489364862442
+      ]
+    ],
+    "input_tokens": 708,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}

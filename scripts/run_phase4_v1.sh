@@ -12,11 +12,11 @@ case "$v1_target" in
   t5) v1_models=(t5_base t5_small) ;;
   *) echo "模型须为all、t5_base、t5_small、flan_t5_base或flan_t5_small" >&2; exit 2 ;;
 esac
-v1_conda=${GRIDPATH_CONDA:-/home/user/miniconda3/bin/conda}
+v1_conda=${GRIDPATH_CONDA:-conda}
 mkdir -p logs/v1
 if [[ "$v1_mode" == prepare ]]; then
   for v1_model in "${v1_models[@]}"; do
-    echo "准备模型资源：$v1_model（工作站直连HF镜像，日志logs/v1/${v1_model}_prepare.log）"
+    echo "准备模型资源：$v1_model（实验设备直连HF镜像，日志logs/v1/${v1_model}_prepare.log）"
     env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u http_proxy -u https_proxy -u all_proxy \
       "$v1_conda" run --no-capture-output --name gridpath python scripts/fetch_pinned_models.py --model "$v1_model" \
       2>&1 | tee -a "logs/v1/${v1_model}_prepare.log"

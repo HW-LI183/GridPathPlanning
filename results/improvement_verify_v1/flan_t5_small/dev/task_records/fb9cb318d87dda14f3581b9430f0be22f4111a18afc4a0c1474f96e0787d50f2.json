@@ -1,0 +1,68 @@
+{
+  "slot": {
+    "independent_sample_id": "sample_4c7e75b93c6696fababa9faa",
+    "record_id": "dev:V:sample_4c7e75b93c6696fababa9faa",
+    "source_sample_id": "sample_4c7e75b93c6696fababa9faa",
+    "task": "VERIFY"
+  },
+  "fingerprint": "83f6e9b0fe3932e51f6fb22db5f10311a872c9989bd7760dc1a5e73c13982016",
+  "status": "materialized",
+  "input_text": "Verify all actions. Grid rows 6 cols 6. Start row 5 col 3. Goal row 5 col 0. Obstacles: row 2 col 4; row 5 col 1.\nCoordinates below are unchecked displacement sums, not legal execution.\n<extra_id_0> step 1 from row 5 col 3 action left to row 5 col 2. Obstacle minus proposed offsets: dr -3 dc 2; dr 0 dc -1.\n<extra_id_0> step 2 from row 5 col 2 action left to row 5 col 1. Obstacle minus proposed offsets: dr -3 dc 3; dr 0 dc 0.\n<extra_id_0> step 3 from row 5 col 1 action left to row 5 col 0. Obstacle minus proposed offsets: dr -3 dc 4; dr 0 dc 1.\n<extra_id_1> END at row 5 col 0; goal row 5 col 0; goal minus end dr 0 dc 0.",
+  "target_text": "invalid | step=2 | reason=obstacle_collision",
+  "prediction": {
+    "text": "valid",
+    "generated_tokens": 0,
+    "failure": null
+  },
+  "detail": {
+    "tags": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "tag_names": [
+      "continue",
+      "continue",
+      "continue",
+      "valid_end"
+    ],
+    "probabilities": [
+      [
+        0.9821743965148926,
+        0.01550761703401804,
+        0.0014766394160687923,
+        0.0008413637988269329,
+        0.0,
+        0.0
+      ],
+      [
+        0.9569173455238342,
+        0.041070062667131424,
+        0.0010691265342757106,
+        0.000943500897847116,
+        0.0,
+        0.0
+      ],
+      [
+        0.954930305480957,
+        0.042951684445142746,
+        0.001247340114787221,
+        0.0008707836968824267,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9863631129264832,
+        0.013636834919452667
+      ]
+    ],
+    "input_tokens": 218,
+    "feedback_source": "language_model_step_tagging",
+    "executor_used": false
+  }
+}
